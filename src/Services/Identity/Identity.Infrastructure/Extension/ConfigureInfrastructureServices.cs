@@ -59,6 +59,8 @@ public static class ConfigureInfrastructureServices
                 policy.RequireClaim("scope", "FunkZone");
             });
         });
+        
+        
         return serviceCollection;
     }
 }
