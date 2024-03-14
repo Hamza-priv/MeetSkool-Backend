@@ -8,7 +8,10 @@ public class MeetSkoolUser
     public string? UserImage { get; set; }
     public string? FullName { get; set; }
     public string? PhoneNumber { get; set; }
-    public Guid? Id { get; set; }
+
+    public Guid Id { get; set; } = Guid.NewGuid();
+
     public bool IsRememberMe { get; set; }
+
     public DateTime? CreatedDate { get; set; }
 }

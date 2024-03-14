@@ -1,4 +1,5 @@
 ﻿using Identity.Application.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Identity.Application.Services.Interfaces;
 
@@ -9,20 +10,15 @@ public interface IAccountServices
     Task<ServiceResponse<UserCreationResponse>> ChangePassword(ChangePassword changePassword);
     Task<ServiceResponse<MeetSkoolUser>> FindByEmail(string email);
 
-    /*Task<List<Models.ApplicationUser>> getBusinessOwnerUser();
-    Task<List<Models.ApplicationUser>> getUser();*/
-    /*
-    Task<SignInResult> PasswordSignInAsync(ViewModels.UserSignInModel user);
-    */
+    Task<ServiceResponse<List<MeetSkoolUser>>> GetTeachersList();
+    Task<ServiceResponse<List<MeetSkoolUser>>> GetStudentsList();
+    Task<ServiceResponse<SignInResult>> PasswordSignInAsync(UserSignInModel signIn);
     Task<ServiceResponse<List<string>>> GetUserRoles(string email);
 
-    /*
-    Task<IdentityResult> deleteUserAsync(string emailorId);
-    */
-    Task<ServiceResponse<ResetPasswordResponse>> ConfirmEmail(string userId, string code);
+    Task<ServiceResponse<IdentityResult>> DeleteUser(string email);
+    Task<ServiceResponse<ConfirmEmailResponse>> ConfirmEmail(string userId, string code);
 
     Task<ServiceResponse<GeneratePasswordResetTokenResponse>> GeneratePasswordResetToken(string email);
-    /*Task<int> getUserCount();
-
-    Task<int> getBusinessOwnerUserCount();*/
+    Task<ServiceResponse<int>> GetTeachersCount();
+    Task<ServiceResponse<int>> GetStudentsCount();
 }

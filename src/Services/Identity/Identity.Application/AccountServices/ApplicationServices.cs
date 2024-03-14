@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Identity.Application.ViewModels;
 using Identity.Core.Entities;
+using Identity.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 
 namespace Identity.Application.AccountServices;
@@ -24,7 +25,10 @@ public class ApplicationServices
 
     public async Task<ServiceResponse<UserCreationResponse>> CreateUser(MeetSkoolUser user, string userRole)
     {
-        var createUserResponse = new ServiceResponse<UserCreationResponse>();
+        var createUserResponse = new ServiceResponse<UserCreationResponse>
+        {
+            Data = new UserCreationResponse()
+        };
         try
         {
             if (string.IsNullOrEmpty(userRole))
@@ -34,6 +38,9 @@ public class ApplicationServices
                 return createUserResponse;
             }
 
+            /*
+            user.Id = Guid.NewGuid();
+            */
             var appUser = _mapper.Map<MeetSkoolIdentityUser>(user);
             if (user is { Password: not null, Email: not null })
             {
@@ -41,27 +48,30 @@ public class ApplicationServices
                 if (result.Succeeded)
                 {
                     createUserResponse.Messages.Add("User Created Successfully");
-                    createUserResponse.Data!.Code = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                    createUserResponse.Data.UserId = appUser.Id;
-                    createUserResponse.Data.Email = appUser.Email;
-
-                    // Add userRole
-                    var dbUser = await _userManager.FindByEmailAsync(user.Email);
-                    if (dbUser is not null)
+                    if (createUserResponse.Data != null)
                     {
-                        var addRoleResponse = await _userManager.AddToRoleAsync(dbUser, userRole);
-                        if (addRoleResponse.Succeeded)
+                        createUserResponse.Data.Code = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+                        createUserResponse.Data.UserId = appUser.Id;
+                        createUserResponse.Data.Email = appUser.Email;
+
+                        // Add userRole
+                        var dbUser = await _userManager.FindByEmailAsync(user.Email);
+                        if (dbUser is not null)
                         {
-                            createUserResponse.Messages.Add("User Role Added Successfully");
-                        }
-                        else
-                        {
-                            addRoleResponse.Errors.ToList().ForEach(x =>
+                            var addRoleResponse = await _userManager.AddToRoleAsync(dbUser, userRole);
+                            if (addRoleResponse.Succeeded)
                             {
-                                createUserResponse.Error.Add(x.Description);
-                            });
-                            createUserResponse.Success = false;
-                            createUserResponse.Data = null;
+                                createUserResponse.Messages.Add("User Role Added Successfully");
+                            }
+                            else
+                            {
+                                addRoleResponse.Errors.ToList().ForEach(x =>
+                                {
+                                    createUserResponse.Error.Add(x.Description);
+                                });
+                                createUserResponse.Success = false;
+                                createUserResponse.Data = null;
+                            }
                         }
                     }
                 }
@@ -89,7 +99,10 @@ public class ApplicationServices
 
     public async Task<ServiceResponse<UserCreationResponse>> UpdateUser(MeetSkoolUser user)
     {
-        var updateUserResponse = new ServiceResponse<UserCreationResponse>();
+        var updateUserResponse = new ServiceResponse<UserCreationResponse>
+        {
+            Data = new UserCreationResponse()
+        };
 
         try
         {
@@ -131,7 +144,10 @@ public class ApplicationServices
 
     public async Task<ServiceResponse<UserCreationResponse>> ChangePassword(ChangePassword changePassword)
     {
-        var changePasswordResponse = new ServiceResponse<UserCreationResponse>();
+        var changePasswordResponse = new ServiceResponse<UserCreationResponse>
+        {
+            Data = new UserCreationResponse()
+        };
         try
         {
             if (changePassword.Email != null)
@@ -147,6 +163,7 @@ public class ApplicationServices
                         if (result.Succeeded)
                         {
                             changePasswordResponse.Messages.Add("Password Changed Successfully");
+                            changePasswordResponse.Data.Email = changePassword.Email;
                             return changePasswordResponse;
                         }
 
@@ -177,45 +194,102 @@ public class ApplicationServices
         }
     }
 
-    public async Task<SignInResult> PasswordSignInAsync(UserSignInModel signIn)
+    public async Task<ServiceResponse<SignInResult>> PasswordSignInAsync(UserSignInModel signIn)
     {
+        var signInResponse = new ServiceResponse<SignInResult>();
         try
         {
             if (signIn is { Email: not null, Password: not null })
-                return await _signInManager.PasswordSignInAsync(signIn.Email, signIn.Password, true, false);
-            return new SignInResult();
+            {
+                signInResponse.Data =
+                    await _signInManager.PasswordSignInAsync(signIn.Email, signIn.Password, true, false);
+                if (signInResponse.Data.Succeeded)
+                {
+                    signInResponse.Messages.Add("Sign In Successful");
+                    return signInResponse;
+                }
+
+                signInResponse.Error.Add("Can not Sign in successfully");
+                signInResponse.Success = false;
+                return signInResponse;
+            }
+
+            signInResponse.Success = false;
+            signInResponse.Error.Add("Email and Password required");
+            return signInResponse;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            signInResponse.Error.Add(e.Message);
+            signInResponse.Success = false;
+            return signInResponse;
         }
     }
 
     public async Task<ServiceResponse<GeneratePasswordResetTokenResponse>> GeneratePasswordResetToken(string email)
     {
-        var passwordResetResponse = new ServiceResponse<GeneratePasswordResetTokenResponse>();
+        var generatePasswordResetToken = new ServiceResponse<GeneratePasswordResetTokenResponse>();
         try
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
-                if (passwordResetResponse.Data != null)
+                if (generatePasswordResetToken.Data != null)
                 {
-                    passwordResetResponse.Data.UserId = user.Id;
-                    passwordResetResponse.Data.FullName = user.FullName;
-                    passwordResetResponse.Data.Token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    passwordResetResponse.Messages.Add("Password Token Generated");
+                    generatePasswordResetToken.Data.UserId = user.Id;
+                    generatePasswordResetToken.Data.FullName = user.FullName;
+                    generatePasswordResetToken.Data.Token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    generatePasswordResetToken.Messages.Add("Password Token Generated");
 
-                    return passwordResetResponse;
+                    return generatePasswordResetToken;
                 }
             }
             else
             {
+                generatePasswordResetToken.Success = false;
+                generatePasswordResetToken.Error.Add("User not found");
+                return generatePasswordResetToken;
+            }
+        }
+        catch (Exception e)
+        {
+            generatePasswordResetToken.Error.Add(e.Message);
+            generatePasswordResetToken.Success = false;
+            return generatePasswordResetToken;
+        }
+
+        return generatePasswordResetToken;
+    }
+
+    public async Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string password)
+    {
+        var passwordResetResponse = new ServiceResponse<ResetPasswordResponse>();
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var result = await _userManager.ResetPasswordAsync(user, code, password);
+                if (result.Succeeded)
+                {
+                    if (passwordResetResponse.Data != null)
+                    {
+                        passwordResetResponse.Data.FullName = user.FullName;
+                        passwordResetResponse.Data.Email = user.Email;
+                    }
+
+                    passwordResetResponse.Messages.Add("Password Reset Successfully");
+                    return passwordResetResponse;
+                }
+
+                result.Errors.ToList().ForEach(x => { passwordResetResponse.Error.Add(x.Description); });
                 passwordResetResponse.Success = false;
-                passwordResetResponse.Error.Add("User not found");
                 return passwordResetResponse;
             }
+
+            passwordResetResponse.Error.Add("User not found");
+            passwordResetResponse.Success = false;
+            return passwordResetResponse;
         }
         catch (Exception e)
         {
@@ -223,7 +297,223 @@ public class ApplicationServices
             passwordResetResponse.Success = false;
             return passwordResetResponse;
         }
+    }
 
-        return passwordResetResponse;
+
+    public async Task<ServiceResponse<ConfirmEmailResponse>> ConfirmEmail(string userId, string code)
+    {
+        var confirmEmailResponse = new ServiceResponse<ConfirmEmailResponse>();
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var result = await _userManager.ConfirmEmailAsync(user, code);
+                if (result.Succeeded)
+                {
+                    confirmEmailResponse.Data!.Email = user.Email;
+                    confirmEmailResponse.Data.UserName = user.UserName;
+                    confirmEmailResponse.Messages.Add("Email Confirmed Successfully");
+                    return confirmEmailResponse;
+                }
+
+                result.Errors.ToList().ForEach(x => { confirmEmailResponse.Error.Add(x.Description); });
+                confirmEmailResponse.Success = false;
+                return confirmEmailResponse;
+            }
+
+            confirmEmailResponse.Error.Add("User not found");
+            confirmEmailResponse.Success = false;
+            return confirmEmailResponse;
+        }
+        catch (Exception e)
+        {
+            confirmEmailResponse.Error.Add(e.Message);
+            confirmEmailResponse.Success = false;
+            return confirmEmailResponse;
+        }
+    }
+
+    public async Task<ServiceResponse<IdentityResult>> DeleteUser(string email)
+    {
+        var deleteUserResponse = new ServiceResponse<IdentityResult>();
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                deleteUserResponse.Data = await _userManager.DeleteAsync(user);
+                if (deleteUserResponse.Data.Succeeded)
+                {
+                    deleteUserResponse.Messages.Add("User Deleted Successfully");
+                    return deleteUserResponse;
+                }
+
+                deleteUserResponse.Success = false;
+                deleteUserResponse.Error.Add("Can not delete user successfully");
+                return deleteUserResponse;
+            }
+
+            deleteUserResponse.Success = false;
+            deleteUserResponse.Error.Add("User not found");
+            return deleteUserResponse;
+        }
+        catch (Exception e)
+        {
+            deleteUserResponse.Error.Add(e.Message);
+            deleteUserResponse.Success = false;
+            return deleteUserResponse;
+        }
+    }
+
+    public async Task<ServiceResponse<int>> GetStudentsCount()
+    {
+        var studentCountResponse = new ServiceResponse<int>();
+        try
+        {
+            var list = await GetStudentsList();
+            if (list.Data is { Count: > 0 })
+            {
+                studentCountResponse.Data = list.Data.Count;
+                studentCountResponse.Messages.Add("Students Count");
+                return studentCountResponse;
+            }
+
+            studentCountResponse.Data = 0;
+            studentCountResponse.Messages.Add("No Students");
+        }
+        catch (Exception e)
+        {
+            studentCountResponse.Success = false;
+            studentCountResponse.Error.Add(e.Message);
+        }
+
+        return studentCountResponse;
+    }
+
+    public async Task<ServiceResponse<List<MeetSkoolUser>>> GetStudentsList()
+    {
+        var studentList = new ServiceResponse<List<MeetSkoolUser>>();
+        try
+        {
+            var students = await _userManager.GetUsersInRoleAsync(Constants.Student);
+            if (students.Count > 0)
+            {
+                studentList.Data = _mapper.Map<List<MeetSkoolUser>>(students);
+                studentList.Messages.Add("Students List");
+                return studentList;
+            }
+
+            studentList.Error.Add("No Students Found");
+            studentList.Success = false;
+            return studentList;
+        }
+        catch (Exception e)
+        {
+            studentList.Error.Add(e.Message);
+            studentList.Success = false;
+            return studentList;
+        }
+    }
+
+    public async Task<ServiceResponse<int>> GetTeachersCount()
+    {
+        var teacherCountResponse = new ServiceResponse<int>();
+        try
+        {
+            var list = await GetTeachersList();
+            if (list.Data is { Count: > 0 })
+            {
+                teacherCountResponse.Data = list.Data.Count;
+                teacherCountResponse.Messages.Add("Teachers Count");
+                return teacherCountResponse;
+            }
+
+            teacherCountResponse.Data = 0;
+            teacherCountResponse.Messages.Add("No teachers");
+        }
+        catch (Exception e)
+        {
+            teacherCountResponse.Success = false;
+            teacherCountResponse.Error.Add(e.Message);
+        }
+
+        return teacherCountResponse;
+    }
+
+
+    public async Task<ServiceResponse<List<MeetSkoolUser>>> GetTeachersList()
+    {
+        var teachersList = new ServiceResponse<List<MeetSkoolUser>>();
+        try
+        {
+            var teachers = await _userManager.GetUsersInRoleAsync(Constants.Teacher);
+            if (teachers.Count > 0)
+            {
+                teachersList.Data = _mapper.Map<List<MeetSkoolUser>>(teachers);
+                teachersList.Messages.Add("Teachers List");
+                return teachersList;
+            }
+
+            teachersList.Error.Add("No Teachers Found");
+            teachersList.Success = false;
+            return teachersList;
+        }
+        catch (Exception e)
+        {
+            teachersList.Error.Add(e.Message);
+            teachersList.Success = false;
+            return teachersList;
+        }
+    }
+
+    public async Task<ServiceResponse<List<string>>> GetUserRoles(string email)
+    {
+        var userRoleResponse = new ServiceResponse<List<string>>();
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                userRoleResponse.Data = (List<string>)await _userManager.GetRolesAsync(user);
+                userRoleResponse.Messages.Add("User Roles");
+                return userRoleResponse;
+            }
+
+            userRoleResponse.Error.Add("User not found");
+            userRoleResponse.Success = false;
+            return userRoleResponse;
+        }
+        catch (Exception e)
+        {
+            userRoleResponse.Error.Add(e.Message);
+            userRoleResponse.Success = false;
+            return userRoleResponse;
+        }
+    }
+
+    public async Task<ServiceResponse<MeetSkoolUser>> FindByEmail(string email)
+    {
+        var findUserResponse = new ServiceResponse<MeetSkoolUser>();
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                findUserResponse.Data = _mapper.Map<MeetSkoolUser>(user);
+                findUserResponse.Messages.Add("User Found");
+                return findUserResponse;
+            }
+
+            findUserResponse.Error.Add("User not found");
+            findUserResponse.Success = false;
+            return findUserResponse;
+        }
+        catch (Exception e)
+        {
+            findUserResponse.Error.Add(e.Message);
+            findUserResponse.Success = false;
+            return findUserResponse;
+        }
     }
 }

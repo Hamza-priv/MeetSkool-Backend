@@ -56,7 +56,7 @@ public static class ConfigureInfrastructureServices
             options.AddPolicy("ApiScope", policy =>
             {
                 policy.RequireAuthenticatedUser();
-                policy.RequireClaim("scope", "FunkZone");
+                policy.RequireClaim("scope", "MeetSkool");
             });
         });
         
