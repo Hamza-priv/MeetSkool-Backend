@@ -11,6 +11,7 @@ public static class ConfigureApplicationServices
     public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IAccountServices, Services.Implementation.AccountServices>();
+        serviceCollection.AddScoped<IEmailServices, EmailServices>();
         serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
         serviceCollection.AddScoped<ApplicationServices>();
         return serviceCollection;

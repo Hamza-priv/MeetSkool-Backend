@@ -1,5 +1,6 @@
 using Identity.Application.Services.Interfaces;
 using Identity.Application.ViewModels;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace Identity.Api.Controllers;
 public class AccountController : ControllerBase
 {
     private readonly IAccountServices _accountServices;
+    private readonly IEmailServices _emailServices;
 
-    public AccountController(IAccountServices accountServices)
+    public AccountController(IAccountServices accountServices, IEmailServices emailServices)
     {
         _accountServices = accountServices;
+        _emailServices = emailServices;
     }
 
     [HttpPost]
@@ -23,12 +26,19 @@ public class AccountController : ControllerBase
         try
         {
             var response = await _accountServices.CreateUser(user);
-            if (response.Success)
+            
+            if (response is not { Success: true, Data.Code: not null }) return BadRequest(response);
+            
+            var check = user.Email != null && await _emailServices.SendConfirmAccount(response.Data.UserId, response.Data.Code, user.FullName, user.Email);
+            
+            if (check)
             {
+                response.Messages.Add("Email sent");
                 return Ok(response);
             }
-
-            return BadRequest(response);
+            
+            response.Error.Add("Email not sent");
+            return Ok(response);
         }
         catch (Exception e)
         {
