@@ -94,7 +94,7 @@ public class AccountServices : IAccountServices
         }
     }
 
-    public async Task<ServiceResponse<SignInResult>> PasswordSignInAsync(UserSignInModel signIn)
+    public async Task<ServiceResponse<UserSignInResponse>> PasswordSignInAsync(UserSignInModel signIn)
     {
         try
         {
@@ -107,7 +107,7 @@ public class AccountServices : IAccountServices
         }
     }
 
-    public async Task<ServiceResponse<List<string>>> GetUserRoles(string email)
+    public async Task<ServiceResponse<List<string>>?> GetUserRoles(string email)
     {
         try
         {

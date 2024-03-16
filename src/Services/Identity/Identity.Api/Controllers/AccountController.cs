@@ -26,17 +26,18 @@ public class AccountController : ControllerBase
         try
         {
             var response = await _accountServices.CreateUser(user);
-            
+
             if (response is not { Success: true, Data.Code: not null }) return BadRequest(response);
-            
-            var check = user.Email != null && await _emailServices.SendConfirmAccount(response.Data.UserId, response.Data.Code, user.FullName, user.Email);
-            
+
+            var check = user.Email != null && await _emailServices.SendConfirmAccount(response.Data.UserId,
+                response.Data.Code, user.FullName, user.Email);
+
             if (check)
             {
                 response.Messages.Add("Email sent");
                 return Ok(response);
             }
-            
+
             response.Error.Add("Email not sent");
             return Ok(response);
         }
@@ -46,6 +47,7 @@ public class AccountController : ControllerBase
         }
     }
 
+
     [HttpPost]
     [Route("/updateUser")]
     public async Task<ActionResult<ServiceResponse<UserCreationResponse>>> UpdateUser([FromBody] MeetSkoolUser user)
@@ -53,6 +55,26 @@ public class AccountController : ControllerBase
         try
         {
             var response = await _accountServices.UpdateUser(user);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+
+    [HttpPost]
+    [Route("/userSign")]
+    public async Task<ActionResult<ServiceResponse<UserSignInResponse>>> UserSign([FromBody] UserSignInModel user)
+    {
+        try
+        {
+            var response = await _accountServices.PasswordSignInAsync(user);
             if (response.Success)
             {
                 return Ok(response);

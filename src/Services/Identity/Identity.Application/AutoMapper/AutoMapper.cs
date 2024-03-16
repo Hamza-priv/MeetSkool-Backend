@@ -22,5 +22,6 @@ public class AutoMapper : Profile
             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now));
         CreateMap<MeetSkoolIdentityUser, UserCreationResponse>();
         CreateMap<MeetSkoolIdentityUser, MeetSkoolUser>();
+        CreateMap<MeetSkoolIdentityUser, UserInfo>();
     }
 }

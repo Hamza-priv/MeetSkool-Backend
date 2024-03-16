@@ -15,6 +15,8 @@ public static class ConfigureInfrastructureServices
     {
         serviceCollection.AddDbContext<IdentityDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("IdentityDbConnection")));
+        
+        
         serviceCollection.AddIdentity<MeetSkoolIdentityUser, MeetSkoolIdentityRole>()
             .AddEntityFrameworkStores<IdentityDbContext>()
             .AddDefaultTokenProviders();

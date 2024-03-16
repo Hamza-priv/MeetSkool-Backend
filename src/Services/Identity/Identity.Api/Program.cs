@@ -16,7 +16,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddProjectServices(configuration);
+
 var app = builder.Build();
+
+app.MigrateDatabase<IdentityDbContext>((context, services) =>
+{
+    var logger = services.GetService<ILogger<IdentityContextSeed>>();
+    if (logger is not null)
+    {
+        IdentityContextSeed.SeedAsync(context, logger).Wait();
+    }
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

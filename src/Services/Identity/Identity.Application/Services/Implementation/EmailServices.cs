@@ -8,6 +8,8 @@ namespace Identity.Application.Services.Implementation;
 
 public class EmailServices : IEmailServices
 {
+    // call back urls need to be done later on
+    
     private readonly IConfiguration _configuration;
 
     public EmailServices(IConfiguration configuration)

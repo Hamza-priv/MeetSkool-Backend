@@ -3,6 +3,7 @@ using Identity.Application.ViewModels;
 using Identity.Core.Entities;
 using Identity.Infrastructure;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace Identity.Application.AccountServices;
 
@@ -194,35 +195,21 @@ public class ApplicationServices
         }
     }
 
-    public async Task<ServiceResponse<SignInResult>> PasswordSignInAsync(UserSignInModel signIn)
+    public async Task<ServiceResponse<UserSignInResponse>> PasswordSignInAsync(UserSignInModel signIn)
     {
-        var signInResponse = new ServiceResponse<SignInResult>();
+        var response = new ServiceResponse<UserSignInResponse>
+        {
+            Data = new UserSignInResponse()
+        };
         try
         {
-            if (signIn is { Email: not null, Password: not null })
-            {
-                signInResponse.Data =
-                    await _signInManager.PasswordSignInAsync(signIn.Email, signIn.Password, true, false);
-                if (signInResponse.Data.Succeeded)
-                {
-                    signInResponse.Messages.Add("Sign In Successful");
-                    return signInResponse;
-                }
-
-                signInResponse.Error.Add("Can not Sign in successfully");
-                signInResponse.Success = false;
-                return signInResponse;
-            }
-
-            signInResponse.Success = false;
-            signInResponse.Error.Add("Email and Password required");
-            return signInResponse;
+            response = await PasswordSignIn(signIn);
+            return response;
         }
         catch (Exception e)
         {
-            signInResponse.Error.Add(e.Message);
-            signInResponse.Success = false;
-            return signInResponse;
+            response.Error.Add(e.Message);
+            return response;
         }
     }
 
@@ -467,7 +454,7 @@ public class ApplicationServices
         }
     }
 
-    public async Task<ServiceResponse<List<string>>> GetUserRoles(string email)
+    public async Task<ServiceResponse<List<string>>?> GetUserRoles(string email)
     {
         var userRoleResponse = new ServiceResponse<List<string>>();
         try
@@ -514,6 +501,61 @@ public class ApplicationServices
             findUserResponse.Error.Add(e.Message);
             findUserResponse.Success = false;
             return findUserResponse;
+        }
+    }
+
+    private async Task<ServiceResponse<UserSignInResponse>> PasswordSignIn(UserSignInModel user)
+    {
+        var signInResponse = new ServiceResponse<UserSignInResponse>()
+        {
+            Data = new UserSignInResponse()
+        };
+        try
+        {
+            if (user is { Email: not null, Password: not null })
+            {
+                signInResponse.Data.SignInResult =
+                    await _signInManager.PasswordSignInAsync(user.Email, user.Password, true, false);
+                if (!signInResponse.Data.SignInResult.Succeeded)
+                {
+                    signInResponse.Success = false;
+                    signInResponse.Error.Add("Invalid Credentials");
+                    return signInResponse;
+                }
+
+                var userInfo = await _userManager.FindByEmailAsync(user.Email);
+                signInResponse.Data.UserInfo = _mapper.Map<UserInfo>(userInfo);
+                signInResponse.Data.UserRoles = await GetUserRoles(user.Email);
+                signInResponse.Messages.Add("User Signed In");
+
+                var client = new HttpClient();
+                var values = new Dictionary<string, string>
+                {
+                    { "username", user.Email },
+                    { "password", user.Password },
+                    { "client_id", "client" },
+                    { "scope", "MeetSkool" },
+                    { "grant_type", "password" },
+                    { "client_secret", "secret" }
+                };
+
+                var content = new FormUrlEncodedContent(values);
+                var responseToken = await client.PostAsync("http://localhost:5284/connect/token", content);
+                var accessToken = await responseToken.Content.ReadAsStringAsync();
+                signInResponse.Data.AccessToken = JsonConvert.DeserializeObject<AccessTokenModel>(accessToken);
+
+                return signInResponse;
+            }
+
+            signInResponse.Success = false;
+            signInResponse.Error.Add("Email and password is required");
+            return signInResponse;
+        }
+        catch (Exception e)
+        {
+            signInResponse.Error.Add(e.Message);
+            signInResponse.Success = false;
+            return signInResponse;
         }
     }
 }
