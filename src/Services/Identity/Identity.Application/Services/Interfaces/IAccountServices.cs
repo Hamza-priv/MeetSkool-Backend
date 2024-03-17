@@ -21,4 +21,5 @@ public interface IAccountServices
     Task<ServiceResponse<GeneratePasswordResetTokenResponse>> GeneratePasswordResetToken(string email);
     Task<ServiceResponse<int>> GetTeachersCount();
     Task<ServiceResponse<int>> GetStudentsCount();
+    Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string newPassword);
 }

@@ -21,6 +21,7 @@ public static class ConfigureInfrastructureServices
             .AddEntityFrameworkStores<IdentityDbContext>()
             .AddDefaultTokenProviders();
         serviceCollection.AddScoped<IIdentityDbContext, IdentityDbContext>();
+        
         var identityBuilder = serviceCollection.AddIdentityServer(options =>
             {
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html

@@ -184,4 +184,17 @@ public class AccountServices : IAccountServices
             throw;
         }
     }
+
+    public async Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string newPassword)
+    {
+        try
+        {
+            return await _applicationServices.ResetPassword(userId, code, newPassword);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

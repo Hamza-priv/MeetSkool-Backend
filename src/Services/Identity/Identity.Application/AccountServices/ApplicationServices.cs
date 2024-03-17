@@ -540,7 +540,7 @@ public class ApplicationServices
                 };
 
                 var content = new FormUrlEncodedContent(values);
-                var responseToken = await client.PostAsync("http://localhost:5284/connect/token", content);
+                var responseToken = await client.PostAsync("http://localhost:5001/connect/token", content);
                 var accessToken = await responseToken.Content.ReadAsStringAsync();
                 signInResponse.Data.AccessToken = JsonConvert.DeserializeObject<AccessTokenModel>(accessToken);
 

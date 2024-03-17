@@ -9,7 +9,7 @@ namespace Identity.Application.Services.Implementation;
 public class EmailServices : IEmailServices
 {
     // call back urls need to be done later on
-    
+
     private readonly IConfiguration _configuration;
 
     public EmailServices(IConfiguration configuration)
@@ -22,8 +22,8 @@ public class EmailServices : IEmailServices
         try
         {
             var callbackUrl = "https://localhost:7046/Account/ConfirmEmail?userId=" + userId + "&code=" + code;
-            var path = Path.Combine(@"EmailTemplates\CreateUserTemplate.html");
-            var check = await SendEmail(callbackUrl, path, email, "Confirm your account", "Confirm your account",
+            var path = Path.Combine(@"EmailTemplates\SendAccountConfirmation.html");
+            var check = await SendEmail(callbackUrl, path, email, "Confirm your account",
                 userName);
             return check;
         }
@@ -39,8 +39,8 @@ public class EmailServices : IEmailServices
         try
         {
             var callbackUrl = "https://localhost:7063/Account/ConfirmEmail?userId=" + userId + "&code=" + code;
-            var path = Path.Combine(@"EmailTemplates\CreateUserTemplate.html");
-            var check = await SendEmail(callbackUrl, path, email, "Confirm your account", "Confirm your account",
+            var path = Path.Combine(@"EmailTemplates\SendAccountConfirmation.html");
+            var check = await SendEmail(callbackUrl, path, email, "Confirm your account",
                 userName);
             return check;
         }
@@ -55,9 +55,9 @@ public class EmailServices : IEmailServices
     {
         try
         {
-            var callbackUrl = "https://localhost:7063/Account/ConfirmEmail?userId=" + userId + "&code=" + token;
-            var path = Path.Combine(@"EmailTemplates\CreateUserTemplate.html");
-            var check = await SendEmail(callbackUrl, path, email, "Confirm your account", "Confirm your account",
+            var callbackUrl = "https://localhost:7063/Account/ResetPassword?userId=" + userId + "&code=" + token;
+            var path = Path.Combine(@"EmailTemplates\SendForgotPassword.html");
+            var check = await SendEmail(callbackUrl, path, email, "Confirm your account",
                 userName);
             return check;
         }
@@ -68,14 +68,31 @@ public class EmailServices : IEmailServices
         }
     }
 
-    public async Task<bool> SendResetPassword(Guid userId, string code, string password, string userName, string email)
+    public async Task<bool> PasswordChangedNotification(string userId, string code, string password, string userName,
+        string email)
     {
         try
         {
-            var callbackUrl = "https://localhost:7063/Account/ConfirmEmail?userId=" + userId + "&code=" + code;
-            var path = Path.Combine(@"EmailTemplates\CreateUserTemplate.html");
-            var check = await SendEmail(callbackUrl, path, email, "Confirm your account", "Confirm your account",
+            const string callbackUrl = "https://localhost:7063/Account/Login";
+            var path = Path.Combine(@"EmailTemplates\SendResetPasswordNotification.html");
+            var check = await SendEmail(callbackUrl, path, email, "Password is Changed",
                 userName);
+            return check;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
+    public async Task<bool> EmailConfirmedNotification(string userId, string userName, string email)
+    {
+        try
+        {
+            const string callbackUrl = "https://localhost:7063/Account/LoginPage";
+            var path = Path.Combine(@"EmailTemplates\SendEmailConfirmedNotification.html");
+            var check = await SendEmail(callbackUrl, path, email, "Your Account is Confirmed", userName);
             return check;
         }
         catch (Exception e)
@@ -86,7 +103,7 @@ public class EmailServices : IEmailServices
     }
 
     private async Task<bool> SendEmail(string callBackUrl, string path, string recipientEmail, string subject,
-        string message, string? userName)
+        string? userName)
     {
         var template = string.Empty;
         if (System.IO.File.Exists(path))
@@ -96,7 +113,7 @@ public class EmailServices : IEmailServices
             template = template.Replace("{$firstname}", userName);
         }
 
-        var check = await InternalSendEmail(recipientEmail, "Confirm your account", template);
+        var check = await InternalSendEmail(recipientEmail, subject, template);
         return check;
     }
 
