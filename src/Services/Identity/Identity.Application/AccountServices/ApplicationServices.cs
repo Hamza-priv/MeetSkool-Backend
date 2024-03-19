@@ -39,9 +39,7 @@ public class ApplicationServices
                 return createUserResponse;
             }
 
-            /*
             user.Id = Guid.NewGuid();
-            */
             var appUser = _mapper.Map<MeetSkoolIdentityUser>(user);
             if (user is { Password: not null, Email: not null })
             {
@@ -540,7 +538,7 @@ public class ApplicationServices
                 };
 
                 var content = new FormUrlEncodedContent(values);
-                var responseToken = await client.PostAsync("http://localhost:5001/connect/token", content);
+                var responseToken = await client.PostAsync("http://localhost:5062/connect/token", content);
                 var accessToken = await responseToken.Content.ReadAsStringAsync();
                 signInResponse.Data.AccessToken = JsonConvert.DeserializeObject<AccessTokenModel>(accessToken);
 
