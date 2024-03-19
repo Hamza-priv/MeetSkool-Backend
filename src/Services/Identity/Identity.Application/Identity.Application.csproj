@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DTOS\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Identity.Core\Identity.Core.csproj" />
       <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj" />
     </ItemGroup>
