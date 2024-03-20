@@ -29,7 +29,7 @@ public class AccountServices : IAccountServices
         }
     }
 
-    public async Task<ServiceResponse<UserCreationResponse>> UpdateUser(MeetSkoolUser user)
+    public async Task<ServiceResponse<UserUpdateResponse>> UpdateUser(UpdateUser user)
     {
         try
         {

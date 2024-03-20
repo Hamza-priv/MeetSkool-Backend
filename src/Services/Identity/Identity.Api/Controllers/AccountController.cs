@@ -94,7 +94,7 @@ public class AccountController : ControllerBase
 
     [HttpPost]
     [Route("updateUser")]
-    public async Task<ActionResult<ServiceResponse<UserCreationResponse>>> UpdateUser([FromBody] MeetSkoolUser user)
+    public async Task<ActionResult<ServiceResponse<UserUpdateResponse>>> UpdateUser([FromBody] UpdateUser user)
     {
         try
         {

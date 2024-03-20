@@ -6,7 +6,7 @@ namespace Identity.Application.Services.Interfaces;
 public interface IAccountServices
 {
     Task<ServiceResponse<UserCreationResponse>> CreateUser(MeetSkoolUser user);
-    Task<ServiceResponse<UserCreationResponse>> UpdateUser(MeetSkoolUser user);
+    Task<ServiceResponse<UserUpdateResponse>> UpdateUser(UpdateUser user);
     Task<ServiceResponse<UserCreationResponse>> ChangePassword(ChangePassword changePassword);
     Task<ServiceResponse<MeetSkoolUser>> FindByEmail(string email);
 

@@ -96,11 +96,11 @@ public class ApplicationServices
         return createUserResponse;
     }
 
-    public async Task<ServiceResponse<UserCreationResponse>> UpdateUser(MeetSkoolUser user)
+    public async Task<ServiceResponse<UserUpdateResponse>> UpdateUser(UpdateUser user)
     {
-        var updateUserResponse = new ServiceResponse<UserCreationResponse>
+        var updateUserResponse = new ServiceResponse<UserUpdateResponse>
         {
-            Data = new UserCreationResponse()
+            Data = new UserUpdateResponse()
         };
 
         try
@@ -114,7 +114,8 @@ public class ApplicationServices
                     var result = await _userManager.UpdateAsync(updatedUser);
                     if (result.Succeeded)
                     {
-                        updateUserResponse.Data = _mapper.Map<UserCreationResponse>(updatedUser);
+                        updateUserResponse.Data = _mapper.Map<UserUpdateResponse>(updatedUser);
+                        updateUserResponse.Data.UserId = updatedUser.Id.ToString();
                         updateUserResponse.Messages.Add("User Updated Successfully");
                         return updateUserResponse;
                     }
