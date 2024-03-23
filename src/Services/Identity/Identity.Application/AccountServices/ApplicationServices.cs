@@ -212,23 +212,23 @@ public class ApplicationServices
         }
     }
 
-    public async Task<ServiceResponse<GeneratePasswordResetTokenResponse>> GeneratePasswordResetToken(string email)
+    public async Task<ServiceResponse<GeneratePasswordResetToken>> GeneratePasswordResetToken(string email)
     {
-        var generatePasswordResetToken = new ServiceResponse<GeneratePasswordResetTokenResponse>();
+        var generatePasswordResetToken = new ServiceResponse<GeneratePasswordResetToken>
+        {
+            Data = new GeneratePasswordResetToken()
+        };
         try
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
-                if (generatePasswordResetToken.Data != null)
-                {
-                    generatePasswordResetToken.Data.UserId = user.Id;
-                    generatePasswordResetToken.Data.FullName = user.FullName;
-                    generatePasswordResetToken.Data.Token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    generatePasswordResetToken.Messages.Add("Password Token Generated");
+                generatePasswordResetToken.Data.UserId = user.Id;
+                generatePasswordResetToken.Data.FullName = user.FullName;
+                generatePasswordResetToken.Data.Token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                generatePasswordResetToken.Messages.Add("Password Token Generated");
 
-                    return generatePasswordResetToken;
-                }
+                return generatePasswordResetToken;
             }
             else
             {
@@ -249,7 +249,10 @@ public class ApplicationServices
 
     public async Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string password)
     {
-        var passwordResetResponse = new ServiceResponse<ResetPasswordResponse>();
+        var passwordResetResponse = new ServiceResponse<ResetPasswordResponse>
+        {
+            Data = new ResetPasswordResponse()
+        };
         try
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -288,9 +291,15 @@ public class ApplicationServices
 
     public async Task<ServiceResponse<ConfirmEmailResponse>> ConfirmEmail(string userId, string code)
     {
-        var confirmEmailResponse = new ServiceResponse<ConfirmEmailResponse>();
+        var confirmEmailResponse = new ServiceResponse<ConfirmEmailResponse>
+        {
+            Data = new ConfirmEmailResponse()
+        };
         try
         {
+            /*
+            var formattedToken = code.Replace(" ", "+");
+            */
             var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {

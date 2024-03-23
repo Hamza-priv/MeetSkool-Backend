@@ -1,3 +1,4 @@
+using AutoMapper;
 using Identity.Application.Services.Interfaces;
 using Identity.Application.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -11,11 +12,13 @@ public class AccountController : ControllerBase
 {
     private readonly IAccountServices _accountServices;
     private readonly IEmailServices _emailServices;
+    private readonly IMapper _mapper;
 
-    public AccountController(IAccountServices accountServices, IEmailServices emailServices)
+    public AccountController(IAccountServices accountServices, IEmailServices emailServices, IMapper mapper)
     {
         _accountServices = accountServices;
         _emailServices = emailServices;
+        _mapper = mapper;
     }
 
     [HttpPost]
@@ -152,27 +155,32 @@ public class AccountController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("forgotPassword")]
-    public async Task<ActionResult<ServiceResponse<ResetPasswordResponse>>> ForgotPassword(string email)
+    public async Task<ActionResult<ServiceResponse<ForgotPasswordResponse>>> ForgotPassword(string email)
     {
         try
         {
+            var forgotPasswordResponse = new ServiceResponse<ForgotPasswordResponse>
+            {
+                Data = new ForgotPasswordResponse()
+            };
             var response = await _accountServices.GeneratePasswordResetToken(email);
             if (!response.Success) return BadRequest(response);
             if (response is { Success: true, Data: { Token: not null, FullName: not null } })
             {
                 var emailSent = await _emailServices.SendForgetPassword(response.Data.UserId, response.Data.Token,
                     response.Data.FullName, email);
+                forgotPasswordResponse.Data = _mapper.Map<ForgotPasswordResponse>(response.Data);
                 if (emailSent)
                 {
-                    response.Messages.Add("Email sent");
-                    return Ok(response);
+                    forgotPasswordResponse.Messages.Add("Email sent");
+                    return Ok(forgotPasswordResponse);
                 }
             }
 
-            response.Error.Add("Email not sent");
-            return BadRequest(response);
+            forgotPasswordResponse.Error.Add("Email not sent");
+            return BadRequest(forgotPasswordResponse);
         }
         catch (Exception e)
         {

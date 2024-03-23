@@ -21,7 +21,7 @@ public class EmailServices : IEmailServices
     {
         try
         {
-            var callbackUrl = "https://localhost:7046/Account/ConfirmEmail?userId=" + userId + "&code=" + code;
+            var callbackUrl = "http://localhost:5173/Account/ConfirmEmail?userId=" + userId + "&code=" + code;
             var path = Path.Combine(@"EmailTemplates\SendAccountConfirmation.html");
             var check = await SendEmail(callbackUrl, path, email, "Confirm your account",
                 userName);
@@ -55,9 +55,9 @@ public class EmailServices : IEmailServices
     {
         try
         {
-            var callbackUrl = "https://localhost:7063/Account/ResetPassword?userId=" + userId + "&code=" + token;
+            var callbackUrl = "http://localhost:5173/Account/ResetPassword?userId=" + userId + "&code=" + token;
             var path = Path.Combine(@"EmailTemplates\SendForgotPassword.html");
-            var check = await SendEmail(callbackUrl, path, email, "Confirm your account",
+            var check = await SendEmail(callbackUrl, path, email, "Forget Password",
                 userName);
             return check;
         }

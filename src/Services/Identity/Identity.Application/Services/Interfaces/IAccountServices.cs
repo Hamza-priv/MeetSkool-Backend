@@ -18,7 +18,7 @@ public interface IAccountServices
     Task<ServiceResponse<IdentityResult>> DeleteUser(string email);
     Task<ServiceResponse<ConfirmEmailResponse>> ConfirmEmail(string userId, string code);
 
-    Task<ServiceResponse<GeneratePasswordResetTokenResponse>> GeneratePasswordResetToken(string email);
+    Task<ServiceResponse<GeneratePasswordResetToken>> GeneratePasswordResetToken(string email);
     Task<ServiceResponse<int>> GetTeachersCount();
     Task<ServiceResponse<int>> GetStudentsCount();
     Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string newPassword);

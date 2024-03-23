@@ -16,7 +16,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddProjectServices(configuration);
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 var app = builder.Build();
 
 app.MigrateDatabase<IdentityDbContext>((context, services) =>
@@ -40,5 +48,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseIdentityServer();
 app.MapControllers();
+app.UseCors("AllowAnyOrigin");
 
 app.Run();

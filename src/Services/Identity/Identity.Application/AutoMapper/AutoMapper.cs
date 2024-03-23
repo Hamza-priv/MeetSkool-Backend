@@ -25,5 +25,6 @@ public class AutoMapper : Profile
         CreateMap<UpdateUser, MeetSkoolIdentityUser>();
         CreateMap<MeetSkoolIdentityUser, MeetSkoolUser>();
         CreateMap<MeetSkoolIdentityUser, UserInfo>();
+        CreateMap<GeneratePasswordResetToken, ForgotPasswordResponse>();
     }
 }

@@ -146,7 +146,7 @@ public class AccountServices : IAccountServices
         }
     }
 
-    public async Task<ServiceResponse<GeneratePasswordResetTokenResponse>> GeneratePasswordResetToken(string email)
+    public async Task<ServiceResponse<GeneratePasswordResetToken>> GeneratePasswordResetToken(string email)
     {
         try
         {
