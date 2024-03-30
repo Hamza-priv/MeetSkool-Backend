@@ -1,6 +1,8 @@
-﻿namespace Students.Core.IRepository;
+﻿using Students.Core.Entities;
 
-public interface IFriendRepository
+namespace Students.Core.IRepository;
+
+public interface IFriendRepository : IGenericRepository<Friend>
 {
     
 }

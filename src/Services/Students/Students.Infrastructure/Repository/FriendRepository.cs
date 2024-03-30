@@ -1,6 +1,12 @@
-﻿namespace Students.Infrastructure.Repository;
+﻿using Students.Core.Entities;
+using Students.Core.IRepository;
+using Students.Infrastructure.Data;
 
-public class FriendRepository
+namespace Students.Infrastructure.Repository;
+
+public class FriendRepository : GenericRepository<Friend>, IFriendRepository
 {
-    
+    protected FriendRepository(StudentDbContext studentDbContext) : base(studentDbContext)
+    {
+    }
 }

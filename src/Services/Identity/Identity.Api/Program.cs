@@ -10,7 +10,9 @@ builder.Configuration
     .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 var configuration = builder.Configuration;
-
+/*
+builder.WebHost.UseUrls("https://192.168.10.19:5062");
+*/
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

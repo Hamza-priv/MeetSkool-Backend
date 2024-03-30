@@ -1,6 +1,8 @@
-﻿namespace Students.Core.IRepository;
+﻿using Students.Core.Entities;
 
-public interface IStudentRepository
+namespace Students.Core.IRepository;
+
+public interface IStudentRepository : IGenericRepository<Student>
 {
     
 }

@@ -244,7 +244,6 @@ public class ApplicationServices
             return generatePasswordResetToken;
         }
 
-        return generatePasswordResetToken;
     }
 
     public async Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string password)

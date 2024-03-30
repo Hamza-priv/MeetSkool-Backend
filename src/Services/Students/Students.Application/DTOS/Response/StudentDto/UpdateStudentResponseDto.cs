@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Students.Application.DTOS.Response.StudentDto;
 
-namespace Students.Core.Entities;
-
-public class Students
+public class UpdateStudentResponseDto
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public required string StudentId { get; set; }
     public string? Descriptions { get; set; }
     public List<string>? Subjects { get; set; } = new List<string>();

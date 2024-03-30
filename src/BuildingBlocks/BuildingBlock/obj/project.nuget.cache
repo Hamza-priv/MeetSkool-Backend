@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Eyf9P3sxBeSm4DXYuXBFxpAxB5AGEyGRO1nk6sp+plLqwXVqOMfKjNLJ/ULQwCrKUwhorzSx5CfET/M1PQScvg==",
+  "dgSpecHash": "nNSJpeLuplpS2tNT9Zz/RJ63ZxkDtjaNrOF7bcrMOkae74IEojHZpscbbQaBqsOJkTV2/L9hkOsM0oNvCFK5rw==",
   "success": true,
   "projectFilePath": "D:\\FYP-Code\\MeetSkool\\src\\BuildingBlocks\\BuildingBlock\\BuildingBlock.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Hamza\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.17\\microsoft.netcore.app.ref.7.0.17.nupkg.sha512",
+    "C:\\Users\\Hamza\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.17\\microsoft.windowsdesktop.app.ref.7.0.17.nupkg.sha512",
+    "C:\\Users\\Hamza\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.17\\microsoft.aspnetcore.app.ref.7.0.17.nupkg.sha512"
+  ],
   "logs": []
 }

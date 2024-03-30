@@ -8,8 +8,7 @@ public class IdentityDbContextFactory : IDesignTimeDbContextFactory<IdentityDbCo
     public IdentityDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<IdentityDbContext>();
-        optionsBuilder.UseSqlServer(
-            "Server=.;Database=MeetSkoolIdentityDb;TrustServerCertificate=true;Trusted_Connection=True;MultipleActiveResultSets=true");
+        optionsBuilder.UseSqlServer("Server=.;Database=MeetSkoolIdentityDb;TrustServerCertificate=true;Trusted_Connection=True;MultipleActiveResultSets=true");
 
         return new IdentityDbContext(optionsBuilder.Options);
     }
