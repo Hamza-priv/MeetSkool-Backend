@@ -243,7 +243,6 @@ public class ApplicationServices
             generatePasswordResetToken.Success = false;
             return generatePasswordResetToken;
         }
-
     }
 
     public async Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string password)
@@ -547,7 +546,9 @@ public class ApplicationServices
                 };
 
                 var content = new FormUrlEncodedContent(values);
-                var responseToken = await client.PostAsync("http://localhost:5062/connect/token", content);
+                var responseToken =
+                    await client.PostAsync("https://meetskoolidentity.azurewebsites.net/connect/token",
+                        content);
                 var accessToken = await responseToken.Content.ReadAsStringAsync();
                 signInResponse.Data.AccessToken = JsonConvert.DeserializeObject<AccessTokenModel>(accessToken);
 

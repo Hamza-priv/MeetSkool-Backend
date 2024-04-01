@@ -5,11 +5,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
     <ItemGroup>
-      <Folder Include="DTOS\Request\" />
-      <Folder Include="DTOS\Response\EducationDto\" />
-      <Folder Include="DTOS\Response\FriendDto\" />
+        <PackageReference Include="AutoMapper" Version="13.0.1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Students.Infrastructure\Students.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

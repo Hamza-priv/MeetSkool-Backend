@@ -2,7 +2,7 @@
 
 namespace Students.Application.Services.Implementation;
 
-public class EducationService : IEducationServices
+public class FriendServices : IFriendServices
 {
     
 }

@@ -1,6 +1,18 @@
-﻿namespace Students.Application.Extensions;
+﻿using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using Students.Application.Services.Implementation;
+using Students.Application.Services.Interfaces;
 
-public class ConfigureApplicationServices
+namespace Students.Application.Extensions;
+
+public static class ConfigureApplicationServices
 {
-    
+    public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<IStudentServices, StudentServices>();
+        serviceCollection.AddScoped<IEducationServices, EducationServices>();
+        serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
+        serviceCollection.AddScoped<IFriendServices, FriendServices>();
+        return serviceCollection;
+    }
 }

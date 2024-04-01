@@ -1,6 +1,6 @@
-﻿namespace Students.Application.DTOS.Response.StudentDto;
+﻿namespace Students.Application.DTOS.Request.StudentDto;
 
-public class UpdateStudentResponseDto
+public class UpdateStudentRequestDto
 {
     public string? Descriptions { get; set; }
     public List<string>? Subjects { get; set; } = new List<string>();
