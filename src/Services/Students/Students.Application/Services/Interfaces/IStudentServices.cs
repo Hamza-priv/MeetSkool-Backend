@@ -9,4 +9,5 @@ public interface IStudentServices
     Task<ServiceResponse<AddStudentResponseDto>> AddStudent(AddStudentRequestDto studentDto);
     Task<ServiceResponse<UpdateStudentResponseDto>> UpdateStudent(UpdateStudentRequestDto updateStudentDto);
     Task<ServiceResponse<bool>> DeleteStudent(string id);
+
 }

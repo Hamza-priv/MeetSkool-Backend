@@ -4,5 +4,5 @@ namespace Students.Core.IRepository;
 
 public interface IFriendRepository : IGenericRepository<Friend>
 {
-    
+    Task<bool> DeleteFriend(string friendId, string studentId);
 }
