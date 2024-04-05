@@ -2,6 +2,6 @@
 
 namespace Students.Core.IRepository;
 
-public interface IStudentRepository : IGenericRepository<Student>
+public interface ISubjectRepository : IGenericRepository<Subject>
 {
 }

@@ -2,6 +2,6 @@
 
 public class AddEducationResponseDto
 {
-    public string? InstituteName { get; set; }
+    public string? DepartmentName { get; set; }
     public string? Degree { get; set; }
 }
