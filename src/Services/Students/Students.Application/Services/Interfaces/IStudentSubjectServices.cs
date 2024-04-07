@@ -1,11 +1,14 @@
-﻿using Students.Application.DTOS.Response.StudentSubjectDto;
+﻿using Students.Application.DTOS.Request.StudentSubjectDto;
+using Students.Application.DTOS.Response.StudentSubjectDto;
+using Students.Application.ServiceResponse;
 
 namespace Students.Application.Services.Interfaces;
 
 public interface IStudentSubjectServices
 {
-    Task<AddStudentSubjectResponseDto> AddStudentSubject(AddStudentSubjectResponseDto addStudentSubjectResponseDto);
+    Task<ServiceResponse<AddStudentSubjectResponseDto>> AddStudentSubject(
+        AddStudentSubjectRequestDto addStudentSubjectRequestDto);
 
-    Task<List<GetStudentSubjectResponseDto>> GetStudentSubject(
-        GetStudentSubjectResponseDto getStudentSubjectResponseDto);
+    Task<ServiceResponse<List<GetStudentSubjectResponseDto>>> GetStudentSubject(
+        GetStudentSubjectRequestDto getStudentSubjectRequestDto);
 }
