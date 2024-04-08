@@ -12,12 +12,18 @@ public class StudentServices : IStudentServices
 {
     private readonly IStudentRepository _studentRepository;
     private readonly IMapper _mapper;
+    private readonly IEducationServices _educationServices;
+    private readonly StudentSubjectServices _studentSubjectServices;
 
-    public StudentServices(IStudentRepository studentRepository, IMapper mapper)
+    public StudentServices(IStudentRepository studentRepository, IMapper mapper, IEducationServices educationServices,
+        StudentSubjectServices studentSubjectServices)
     {
         _studentRepository = studentRepository;
         _mapper = mapper;
+        _educationServices = educationServices;
+        _studentSubjectServices = studentSubjectServices;
     }
+
 
     public async Task<ServiceResponse<AddStudentResponseDto>> AddStudent(AddStudentRequestDto studentDto)
     {
@@ -64,7 +70,7 @@ public class StudentServices : IStudentServices
                     var newStudent = _mapper.Map(dbStudent, updateStudentDto);
                     var updatedStudent = _mapper.Map<Student>(newStudent);
                     var result = await _studentRepository.UpdateAsync(updatedStudent);
-                    if (result != null)
+                    if (result is not null)
                     {
                         updateStudentResponse.Data = _mapper.Map<UpdateStudentResponseDto>(updatedStudent);
                         updateStudentResponse.Messages.Add("Student updated successfully");
@@ -121,6 +127,71 @@ public class StudentServices : IStudentServices
             deleteStudentResponse.Error.Add(e.Message);
             deleteStudentResponse.Success = false;
             return deleteStudentResponse;
+        }
+    }
+
+    public async Task<ServiceResponse<GetAllInfoOfStudentResponseDto>> GetAllInfoOfStudent(string studentId)
+    {
+        var getStudentResponse = new ServiceResponse<GetAllInfoOfStudentResponseDto>()
+        {
+            Data = new GetAllInfoOfStudentResponseDto()
+        };
+        try
+        {
+            var student = await _studentRepository.GetByIdAsync(studentId);
+            if (student != null)
+            {
+                getStudentResponse.Data = _mapper.Map<GetAllInfoOfStudentResponseDto>(student);
+                getStudentResponse.Messages.Add("Student found successfully");
+                var studentEducation = await _educationServices.GetStudentEducation(studentId);
+                if (studentEducation.Success)
+                {
+                    getStudentResponse.Data = _mapper.Map<GetAllInfoOfStudentResponseDto>(studentEducation);
+                    getStudentResponse.Messages.Add("StudentEducation found successfully");
+                    var studentSubjects = await _studentSubjectServices.GetStudentSubject(studentId);
+                    if (studentSubjects.Success)
+                    {
+                        getStudentResponse.Data = _mapper.Map<GetAllInfoOfStudentResponseDto>(studentSubjects);
+                        getStudentResponse.Messages.Add("StudentSubjects found successfully");
+                        return getStudentResponse;
+                    }
+
+                    getStudentResponse.Error.Add("StudentSubjects not found");
+                    getStudentResponse.Success = false;
+                    return getStudentResponse;
+                }
+
+                getStudentResponse.Error.Add("StudentEducation not found");
+                getStudentResponse.Success = false;
+                return getStudentResponse;
+            }
+
+            getStudentResponse.Error.Add("Student not found");
+            getStudentResponse.Success = false;
+            return getStudentResponse;
+        }
+        catch (Exception e)
+        {
+            getStudentResponse.Error.Add(e.Message);
+            getStudentResponse.Success = false;
+            return getStudentResponse;
+        }
+    }
+
+    public async Task<ServiceResponse<GetStudentListResponseDto>> GetAllStudents()
+    {
+        var getStudentListResponse = new ServiceResponse<GetStudentListResponseDto>()
+        {
+            Data = new GetStudentListResponseDto()
+        };
+        try
+        {
+            return getStudentListResponse;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

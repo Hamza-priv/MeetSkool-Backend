@@ -94,4 +94,32 @@ public class EducationServices : IEducationServices
             return updateEducationResponse;
         }
     }
+
+    public async Task<ServiceResponse<GetStudentEducationResponseDto>> GetStudentEducation(string studentId)
+    {
+        var getStudentEducationResponse = new ServiceResponse<GetStudentEducationResponseDto>()
+        {
+            Data = new GetStudentEducationResponseDto()
+        };
+        try
+        {
+            var studentEducation = await _educationRepository.GetStudentEducation(studentId);
+            if (studentEducation is not null)
+            {
+                getStudentEducationResponse.Data = _mapper.Map<GetStudentEducationResponseDto>(studentEducation);
+                getStudentEducationResponse.Messages.Add("StudentEducationFound");
+                return getStudentEducationResponse;
+            }
+
+            getStudentEducationResponse.Error.Add("StudentEducationNotFound");
+            getStudentEducationResponse.Success = false;
+            return getStudentEducationResponse;
+        }
+        catch (Exception e)
+        {
+            getStudentEducationResponse.Error.Add(e.Message);
+            getStudentEducationResponse.Success = false;
+            return getStudentEducationResponse;
+        }
+    }
 }

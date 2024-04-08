@@ -10,5 +10,5 @@ public interface IStudentSubjectServices
         AddStudentSubjectRequestDto addStudentSubjectRequestDto);
 
     Task<ServiceResponse<List<GetStudentSubjectResponseDto>>> GetStudentSubject(
-        GetStudentSubjectRequestDto getStudentSubjectRequestDto);
+        string studentId);
 }

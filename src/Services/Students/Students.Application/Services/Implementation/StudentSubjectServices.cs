@@ -69,15 +69,15 @@ public class StudentSubjectServices : IStudentSubjectServices
     }
 
     public async Task<ServiceResponse<List<GetStudentSubjectResponseDto>>> GetStudentSubject(
-        GetStudentSubjectRequestDto getStudentSubjectRequestDto)
+        string studentId)
     {
         var getStudentSubjectResponse = new ServiceResponse<List<GetStudentSubjectResponseDto>>();
 
         try
         {
-            if (getStudentSubjectRequestDto.StudentId != null)
+            if (!string.IsNullOrWhiteSpace(studentId))
             {
-                var result = await _studentSubjectsRepository.GetStudentSubjects(getStudentSubjectRequestDto.StudentId);
+                var result = await _studentSubjectsRepository.GetStudentSubjects(studentId);
                 if (result is not null)
                 {
                     getStudentSubjectResponse.Data = _mapper.Map<List<GetStudentSubjectResponseDto>>(result);

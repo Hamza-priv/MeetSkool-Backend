@@ -8,4 +8,6 @@ public interface IEducationServices
 { 
     Task<ServiceResponse<AddEducationResponseDto>> AddEducation(AddEducationRequestDto addEducationRequestDto); 
     Task<ServiceResponse<UpdateEducationResponseDto>> UpdateEducation(UpdateEducationRequestDto updateEducationRequestDto);
-}
+    Task<ServiceResponse<GetStudentEducationResponseDto>> GetStudentEducation(string studentId);
+    
+} 
