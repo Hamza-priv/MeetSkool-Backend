@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Students.Application.DTOS.Request.StudentDto;
 using Students.Application.DTOS.Response.StudentDto;
+using Students.Application.Pagination;
 using Students.Application.ServiceResponse;
 using Students.Application.Services.Interfaces;
 using Students.Core.Entities;
@@ -178,7 +179,8 @@ public class StudentServices : IStudentServices
         }
     }
 
-    public async Task<ServiceResponse<GetStudentListResponseDto>> GetAllStudents()
+    public async Task<ServiceResponse<GetStudentListResponseDto>> GetAllStudents(string? searchTerm, int page,
+        int pageSize)
     {
         var getStudentListResponse = new ServiceResponse<GetStudentListResponseDto>()
         {
@@ -186,12 +188,24 @@ public class StudentServices : IStudentServices
         };
         try
         {
+            var students = await _studentRepository.SearchStudents(searchTerm);
+            if (students.Count > 0)
+            {
+                var list = await Pagination<Student>.GetPaginatedList(students.AsQueryable(), page, pageSize);
+                getStudentListResponse.Data = _mapper.Map<GetStudentListResponseDto>(list);
+                getStudentListResponse.Messages.Add("Students found successfully");
+                return getStudentListResponse;
+            }
+
+            getStudentListResponse.Error.Add("Students not found");
+            getStudentListResponse.Success = false;
             return getStudentListResponse;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            getStudentListResponse.Error.Add(e.Message);
+            getStudentListResponse.Success = false;
+            return getStudentListResponse;
         }
     }
 }

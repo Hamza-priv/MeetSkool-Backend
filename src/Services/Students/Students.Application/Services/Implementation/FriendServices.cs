@@ -80,4 +80,29 @@ public class FriendServices : IFriendServices
             return deleteFriendResponse;
         }
     }
+
+    public async Task<ServiceResponse<List<GetStudentFriendResponseDto>>> GetFriends(string studentId)
+    {
+        var getStudentFriendResponse = new ServiceResponse<List<GetStudentFriendResponseDto>>();
+        try
+        {
+            var studentFriends = await _friendRepository.GetStudentFriend(studentId);
+            if (studentFriends == null)
+            {
+                getStudentFriendResponse.Error.Add("Friends not found");
+                getStudentFriendResponse.Success = false;
+                return getStudentFriendResponse;
+            }
+
+            getStudentFriendResponse.Data = _mapper.Map<List<GetStudentFriendResponseDto>>(studentFriends);
+            getStudentFriendResponse.Messages.Add("Friends found");
+            return getStudentFriendResponse;
+        }
+        catch (Exception e)
+        {
+            getStudentFriendResponse.Error.Add(e.Message);
+            getStudentFriendResponse.Success = false;
+            return getStudentFriendResponse;
+        }
+    }
 }

@@ -32,4 +32,18 @@ public class FriendRepository : GenericRepository<Friend>, IFriendRepository
             return false;
         }
     }
+
+    public async Task<List<Friend>?> GetStudentFriend(string studentId)
+    {
+        try
+        {
+            var studentFriend = await _studentDbContext.Friends.Where(f => f.StudentId == studentId).ToListAsync();
+            return studentFriend.Count <= 0 ? null : studentFriend;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }
