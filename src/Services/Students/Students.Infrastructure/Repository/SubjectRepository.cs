@@ -6,7 +6,7 @@ namespace Students.Infrastructure.Repository;
 
 public class SubjectRepository : GenericRepository<Subject>, ISubjectRepository
 {
-    protected SubjectRepository(StudentDbContext studentDbContext) : base(studentDbContext)
+    public SubjectRepository(StudentDbContext studentDbContext) : base(studentDbContext)
     {
     }
 }

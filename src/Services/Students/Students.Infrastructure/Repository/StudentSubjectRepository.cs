@@ -9,7 +9,7 @@ public class StudentSubjectRepository : GenericRepository<StudentSubject>, IStud
 {
     private readonly StudentDbContext _studentDbContext;
 
-    protected StudentSubjectRepository(StudentDbContext studentDbContext) : base(studentDbContext)
+    public StudentSubjectRepository(StudentDbContext studentDbContext) : base(studentDbContext)
     {
         _studentDbContext = studentDbContext;
     }

@@ -12,12 +12,14 @@ public static class ConfigureInfrastructureServices
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
-        serviceCollection.AddDbContext<StudentDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationConnectionString")));
+        serviceCollection.AddDbContext<StudentDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("ApplicationConnectionString")));
         serviceCollection.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         serviceCollection.AddScoped<IStudentRepository, StudentRepository>();
         serviceCollection.AddScoped<IEducationRepository, EducationRepository>();
         serviceCollection.AddScoped<IFriendRepository, FriendRepository>();
+        serviceCollection.AddScoped<ISubjectRepository, SubjectRepository>();
+        serviceCollection.AddScoped<IStudentSubjectsRepository, StudentSubjectRepository>();
         return serviceCollection;
     }
-    
 }

@@ -13,6 +13,8 @@ public static class ConfigureApplicationServices
         serviceCollection.AddScoped<IEducationServices, EducationServices>();
         serviceCollection.AddAutoMapper(Assembly.GetExecutingAssembly());
         serviceCollection.AddScoped<IFriendServices, FriendServices>();
+        serviceCollection.AddScoped<ISubjectServices, SubjectServices>();
+        serviceCollection.AddScoped<IStudentSubjectServices, StudentSubjectServices>();
         return serviceCollection;
     }
 }

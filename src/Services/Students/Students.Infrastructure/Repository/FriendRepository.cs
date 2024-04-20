@@ -9,7 +9,7 @@ public class FriendRepository : GenericRepository<Friend>, IFriendRepository
 {
     private readonly StudentDbContext _studentDbContext;
 
-    protected FriendRepository(StudentDbContext studentDbContext) : base(studentDbContext)
+    public FriendRepository(StudentDbContext studentDbContext) : base(studentDbContext)
     {
         _studentDbContext = studentDbContext;
     }

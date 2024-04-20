@@ -7,8 +7,9 @@ namespace Students.Infrastructure.Repository;
 
 public class EducationRepository : GenericRepository<Education>, IEducationRepository
 {
-    private readonly  StudentDbContext _studentDbContext;
-    protected EducationRepository(StudentDbContext studentDbContext) : base(studentDbContext)
+    private readonly StudentDbContext _studentDbContext;
+
+    public EducationRepository(StudentDbContext studentDbContext) : base(studentDbContext)
     {
         _studentDbContext = studentDbContext;
     }
@@ -17,7 +18,8 @@ public class EducationRepository : GenericRepository<Education>, IEducationRepos
     {
         try
         {
-            var studentEducation  = await _studentDbContext.Educations.Where(x => x.StudentId == studentId).FirstOrDefaultAsync();
+            var studentEducation = await _studentDbContext.Educations.Where(x => x.StudentId == studentId)
+                .FirstOrDefaultAsync();
             return studentEducation ?? null;
         }
         catch (Exception e)

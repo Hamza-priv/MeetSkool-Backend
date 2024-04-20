@@ -14,10 +14,10 @@ public class StudentServices : IStudentServices
     private readonly IStudentRepository _studentRepository;
     private readonly IMapper _mapper;
     private readonly IEducationServices _educationServices;
-    private readonly StudentSubjectServices _studentSubjectServices;
+    private readonly IStudentSubjectServices _studentSubjectServices;
 
     public StudentServices(IStudentRepository studentRepository, IMapper mapper, IEducationServices educationServices,
-        StudentSubjectServices studentSubjectServices)
+        IStudentSubjectServices studentSubjectServices)
     {
         _studentRepository = studentRepository;
         _mapper = mapper;
@@ -39,6 +39,7 @@ public class StudentServices : IStudentServices
             if (result != null)
             {
                 addStudentResponse.Data.StudentId = result.StudentId;
+                addStudentResponse.Data.StudentName = result.StudentName;
                 addStudentResponse.Messages.Add("Student added successfully");
                 return addStudentResponse;
             }

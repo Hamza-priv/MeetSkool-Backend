@@ -24,7 +24,7 @@ public class AutoMapper : Profile
         CreateMap<AddStudentSubjectRequestDto, StudentSubject>();
 
         //Response Mapping
-        
-        
+
+        CreateMap<Student, UpdateStudentRequestDto>();
     }
 }

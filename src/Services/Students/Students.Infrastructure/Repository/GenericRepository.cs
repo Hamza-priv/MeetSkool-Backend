@@ -71,8 +71,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         try
         {
+            _studentDbContext.Entry(entity).State = EntityState.Detached;
             _studentDbContext.Entry(entity).State = EntityState.Modified;
             await _studentDbContext.SaveChangesAsync();
+            // Detach the entity after saving changes
             return entity;
         }
         catch (Exception e)

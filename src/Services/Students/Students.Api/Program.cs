@@ -1,14 +1,40 @@
-var builder = WebApplication.CreateBuilder(args);
+using Students.Api.Extensions;
+using Students.Infrastructure.Data;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile($"appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddProjectServices(configuration);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
-
+app.MigrateDatabase<StudentDbContext>((context, services) =>
+{
+    var logger = services.GetService<ILogger<StudentDbContextSeed>>();
+    if (logger is not null)
+    {
+        StudentDbContextSeed.SeedAsync(context, logger).Wait();
+    }
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -19,6 +45,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseCors("AllowAnyOrigin");
 
 app.MapControllers();
 
