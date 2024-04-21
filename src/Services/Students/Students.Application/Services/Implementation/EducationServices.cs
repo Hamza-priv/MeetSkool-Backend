@@ -60,7 +60,7 @@ public class EducationServices : IEducationServices
         {
             if (updateEducationRequestDto.StudentId != null)
             {
-                var dbEducation = await _educationRepository.GetByIdAsync(updateEducationRequestDto.StudentId);
+                var dbEducation = await _educationRepository.GetStudentEducation(updateEducationRequestDto.StudentId);
                 if (dbEducation is not null)
                 {
                     var newEducation = _mapper.Map(dbEducation, updateEducationRequestDto);

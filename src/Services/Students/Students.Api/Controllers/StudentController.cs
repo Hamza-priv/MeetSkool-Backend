@@ -115,9 +115,26 @@ public class StudentController : ControllerBase
         }
     }
 
-    // Get All student method need to be implemented 
+    [Route("getAllStudents")]
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<GetStudentListResponseDto>>> GetStudentList(string? searchTerm,
+        int page, int pageSize)
+    {
+        try
+        {
+            var result = await _studentServices.GetAllStudents(searchTerm, page, pageSize);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
 
-
+            return BadRequest(result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
     // Education Controller
 
     [Route("createStudentEducation")]
@@ -148,6 +165,7 @@ public class StudentController : ControllerBase
     {
         try
         {
+            // need fixing
             var result = await _educationServices.UpdateEducation(updateEducationRequestDto);
             if (result.Success)
             {
