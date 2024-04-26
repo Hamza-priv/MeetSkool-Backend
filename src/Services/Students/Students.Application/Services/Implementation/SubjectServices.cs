@@ -16,11 +16,11 @@ public class SubjectServices : ISubjectServices
         _mapper = mapper;
     }
 
-    public async Task<GetSubjectResponseDto?> GetSubject(string subjectId)
+    public async Task<GetSubjectResponseDto?> GetSubject(Guid subjectId)
     {
         try
         {
-            if (subjectId.Length <= 0) return null;
+            if (subjectId == Guid.Empty) return null;
             var subject = await _subjectRepository.GetByIdAsync(subjectId);
             return subject is not null ? _mapper.Map<GetSubjectResponseDto>(subject) : null;
         }

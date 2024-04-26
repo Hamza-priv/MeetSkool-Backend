@@ -4,7 +4,10 @@ using Students.Application.DTOS.Request.FriendDto;
 using Students.Application.DTOS.Request.StudentDto;
 using Students.Application.DTOS.Request.StudentSubjectDto;
 using Students.Application.DTOS.Response.EducationDto;
+using Students.Application.DTOS.Response.FriendDto;
 using Students.Application.DTOS.Response.StudentDto;
+using Students.Application.DTOS.Response.StudentSubjectDto;
+using Students.Application.DTOS.Response.SubjectDto;
 using Students.Core.Entities;
 
 namespace Students.Application.AutoMapper;
@@ -35,5 +38,10 @@ public class AutoMapper : Profile
         CreateMap<Education, UpdateEducationResponseDto>();
         CreateMap<Education, UpdateEducationRequestDto>();
         CreateMap<Education, GetStudentEducationResponseDto>();
+        CreateMap<Subject, GetSubjectResponseDto>();
+        CreateMap<StudentSubject, AddStudentSubjectResponseDto>();
+        CreateMap<StudentSubject, GetStudentSubjectResponseDto>();
+        CreateMap<Friend, AddFriendResponseDto>();
+        CreateMap<Friend, GetStudentFriendResponseDto>();
     }
 }

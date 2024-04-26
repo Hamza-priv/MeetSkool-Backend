@@ -46,4 +46,18 @@ public class FriendRepository : GenericRepository<Friend>, IFriendRepository
             throw;
         }
     }
+
+    public async Task<Friend?> GetFriend(string friendId)
+    {
+        try
+        {
+            var friend = await _studentDbContext.Friends.Where(f => f.FriendId == friendId).FirstOrDefaultAsync();
+            return friend ?? null;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

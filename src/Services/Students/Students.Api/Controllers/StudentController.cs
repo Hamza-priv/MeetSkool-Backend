@@ -13,7 +13,7 @@ using Students.Application.Services.Interfaces;
 namespace Students.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class StudentController : ControllerBase
 {
     private readonly IEducationServices _educationServices;

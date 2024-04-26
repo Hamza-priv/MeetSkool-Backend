@@ -53,7 +53,7 @@ public class FriendServices : IFriendServices
         var deleteFriendResponse = new ServiceResponse<bool>();
         try
         {
-            var friend = await _friendRepository.GetByIdAsync(friendId);
+            var friend = await _friendRepository.GetFriend(friendId);
             if (friend != null)
             {
                 var result = await _friendRepository.DeleteFriend(friendId, studentId);
