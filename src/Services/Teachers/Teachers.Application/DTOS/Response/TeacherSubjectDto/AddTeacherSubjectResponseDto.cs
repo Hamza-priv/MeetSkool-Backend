@@ -2,5 +2,6 @@
 
 public class AddTeacherSubjectResponseDto
 {
-    
+    public string? SubjectId { get; set; }
+    public string? StudentId { get; set; }
 }

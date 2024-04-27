@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Extensions\" />
+      <ProjectReference Include="..\Teachers.Application\Teachers.Application.csproj" />
     </ItemGroup>
 
 </Project>

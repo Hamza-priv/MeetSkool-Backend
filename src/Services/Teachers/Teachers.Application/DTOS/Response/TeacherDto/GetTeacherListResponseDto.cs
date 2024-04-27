@@ -2,5 +2,6 @@
 
 public class GetTeacherListResponseDto
 {
-    
+    public string? TeacherName { get; set; }
+    public string? TeacherId { get; set; }
 }

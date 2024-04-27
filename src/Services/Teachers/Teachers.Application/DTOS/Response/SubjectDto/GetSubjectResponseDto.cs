@@ -2,5 +2,5 @@
 
 public class GetSubjectResponseDto
 {
-    
+    public string? SubjectName { get; set; }
 }

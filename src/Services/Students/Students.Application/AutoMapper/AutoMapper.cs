@@ -26,7 +26,6 @@ public class AutoMapper : Profile
         CreateMap<UpdateEducationRequestDto, Education>();
         CreateMap<AddFriendRequestDto, Friend>();
         CreateMap<AddStudentSubjectRequestDto, StudentSubject>();
-        CreateMap<AddStudentSubjectRequestDto, StudentSubject>();
 
         //Response Mapping
 

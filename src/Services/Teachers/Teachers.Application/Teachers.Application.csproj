@@ -5,13 +5,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
     <ItemGroup>
-      <Folder Include="AutoMapper\" />
-      <Folder Include="Extensions\" />
-      <Folder Include="ServiceResponse\" />
-      <Folder Include="Services\Implementation\" />
-      <Folder Include="Services\Interfaces\" />
+        <PackageReference Include="AutoMapper" Version="13.0.1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Teachers.Infrastructure\Teachers.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

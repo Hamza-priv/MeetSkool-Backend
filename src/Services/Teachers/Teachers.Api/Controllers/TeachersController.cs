@@ -6,4 +6,5 @@ namespace Teachers.Api.Controllers;
 [Route("api/[controller]")]
 public class TeachersController : ControllerBase
 {
+    
 }

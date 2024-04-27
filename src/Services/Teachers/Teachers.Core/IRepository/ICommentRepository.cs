@@ -1,5 +1,7 @@
-﻿namespace Teachers.Core.IRepository;
+﻿using Teachers.Core.Entities;
 
-public interface ICommentRepository
+namespace Teachers.Core.IRepository;
+
+public interface ICommentRepository : IGenericRepository<Comments>
 {
 }
