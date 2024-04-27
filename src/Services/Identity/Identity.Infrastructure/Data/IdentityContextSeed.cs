@@ -9,8 +9,8 @@ public class IdentityContextSeed
         if (!context.Users.Any())
         {
             await context.SaveChangesAsync();
-        
-            logger.LogInformation($"Customer App Database seeded.");
+
+            logger.LogInformation($"Identity Api Database seeded.");
         }
     }
 }

@@ -8,8 +8,6 @@
 
     <ItemGroup>
       <Folder Include="AutoMapper\" />
-      <Folder Include="DTOS\Request\" />
-      <Folder Include="DTOS\Response\" />
       <Folder Include="Extensions\" />
       <Folder Include="ServiceResponse\" />
       <Folder Include="Services\Implementation\" />

@@ -9,7 +9,7 @@ public class StudentDbContextSeed
         if (!context.Students.Any())
         {
             await context.SaveChangesAsync();
-            logger.LogInformation($"Customer App Database seeded.");
+            logger.LogInformation($"Student Api Database seeded.");
         }
     }
 }

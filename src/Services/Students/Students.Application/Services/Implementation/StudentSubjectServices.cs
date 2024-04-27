@@ -31,7 +31,7 @@ public class StudentSubjectServices : IStudentSubjectServices
         };
         try
         {
-            if (addStudentSubjectRequestDto.SubjectId != null)
+            if (addStudentSubjectRequestDto.SubjectId != Guid.Empty)
             {
                 var subject = await _subjectServices.GetSubject(addStudentSubjectRequestDto.SubjectId);
                 if (subject is not null)
