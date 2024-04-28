@@ -6,7 +6,7 @@ namespace Teachers.Infrastructure.Repository;
 
 public class CommentRepository : GenericRepository<Comments>, ICommentRepository
 {
-    protected CommentRepository(TeacherDbContext teacherDbContext) : base(teacherDbContext)
+    public CommentRepository(TeacherDbContext teacherDbContext) : base(teacherDbContext)
     {
     }
 }

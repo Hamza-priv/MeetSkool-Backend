@@ -24,7 +24,7 @@ public class TeacherServices : ITeacherServices
         _teacherSubjectServices = teacherSubjectServices;
     }
 
-    public async Task<ServiceResponse<AddTeacherResponseDto>> AddStudent(AddTeacherRequestDto teacherDto)
+    public async Task<ServiceResponse<AddTeacherResponseDto>> AddTeacher(AddTeacherRequestDto teacherDto)
     {
         var addTeacherResponse = new ServiceResponse<AddTeacherResponseDto>()
         {
@@ -54,7 +54,7 @@ public class TeacherServices : ITeacherServices
         }
     }
 
-    public async Task<ServiceResponse<UpdateTeacherResponseDto>> UpdateStudent(UpdateTeacherRequestDto updateTeacherDto)
+    public async Task<ServiceResponse<UpdateTeacherResponseDto>> UpdateTeacher(UpdateTeacherRequestDto updateTeacherDto)
     {
         var updateTeacherResponse = new ServiceResponse<UpdateTeacherResponseDto>()
         {
@@ -95,7 +95,7 @@ public class TeacherServices : ITeacherServices
         }
     }
 
-    public async Task<ServiceResponse<bool>> DeleteStudent(string id)
+    public async Task<ServiceResponse<bool>> DeleteTeacher(string id)
     {
         var deleteTeacherResponse = new ServiceResponse<bool>();
         try
@@ -130,7 +130,7 @@ public class TeacherServices : ITeacherServices
         }
     }
 
-    public async Task<ServiceResponse<GetAllInfoOfTeacherResponseDto>> GetAllInfoOfStudent(string teacherId)
+    public async Task<ServiceResponse<GetAllInfoOfTeacherResponseDto>> GetAllInfoOfTeacher(string teacherId)
     {
         var getTeacherResponse = new ServiceResponse<GetAllInfoOfTeacherResponseDto>()
         {
@@ -178,7 +178,7 @@ public class TeacherServices : ITeacherServices
         }
     }
 
-    public async Task<ServiceResponse<GetTeacherListResponseDto>> GetAllStudents(string? searchTerm, int page,
+    public async Task<ServiceResponse<GetTeacherListResponseDto>> GetAllTeachers(string? searchTerm, int page,
         int pageSize)
     {
         var getTeacherListResponse = new ServiceResponse<GetTeacherListResponseDto>()

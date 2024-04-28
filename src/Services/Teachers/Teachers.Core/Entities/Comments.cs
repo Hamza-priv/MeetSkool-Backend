@@ -1,7 +1,10 @@
-﻿namespace Teachers.Core.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Teachers.Core.Entities;
 
 public class Comments
 {
+    [Key]
     public Guid CommentId { get; set; }
     public string? Comment { get; set; }
     public string? TeacherId { get; set; }

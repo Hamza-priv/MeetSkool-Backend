@@ -37,5 +37,6 @@ public class AutoMapper : Profile
         CreateMap<Subject, GetSubjectResponseDto>();
         CreateMap<TeacherSubject, AddTeacherSubjectResponseDto>();
         CreateMap<TeacherSubject, GetTeacherSubjectResponseDto>();
+        CreateMap<Teacher, GetTeacherListResponseDto>();
     }
 }
