@@ -178,13 +178,10 @@ public class TeacherServices : ITeacherServices
         }
     }
 
-    public async Task<ServiceResponse<GetTeacherListResponseDto>> GetAllTeachers(string? searchTerm, int page,
+    public async Task<ServiceResponse<List<GetTeacherListResponseDto>>> GetAllTeachers(string? searchTerm, int page,
         int pageSize)
     {
-        var getTeacherListResponse = new ServiceResponse<GetTeacherListResponseDto>()
-        {
-            Data = new GetTeacherListResponseDto()
-        };
+        var getTeacherListResponse = new ServiceResponse<List<GetTeacherListResponseDto>>();
         try
         {
             var teachers = await _teacherRepository.SearchTeacher(searchTerm);
@@ -193,7 +190,7 @@ public class TeacherServices : ITeacherServices
                 /*
                 var list = await Pagination<Student>.GetPaginatedList(students.AsQueryable(), page, pageSize);
                 */
-                getTeacherListResponse.Data = _mapper.Map<GetTeacherListResponseDto>(teachers);
+                getTeacherListResponse.Data = _mapper.Map<List<GetTeacherListResponseDto>>(teachers);
                 getTeacherListResponse.Messages.Add("Teachers found successfully");
                 return getTeacherListResponse;
             }

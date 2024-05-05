@@ -6,4 +6,5 @@ namespace Students.Application.Services.Interfaces;
 public interface ISubjectServices
 { 
     Task<GetSubjectResponseDto?> GetSubject(Guid subjectId);
+    Task<ServiceResponse<GetSubjectListResponseDto>> GetSearchedSubjects(string? searchTerm);
 }

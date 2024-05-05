@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Teachers.Application.DTOS.Request.CommentDto;
 using Teachers.Application.DTOS.Request.EducationDto;
@@ -5,6 +6,7 @@ using Teachers.Application.DTOS.Request.TeacherDto;
 using Teachers.Application.DTOS.Request.TeacherSubjectDto;
 using Teachers.Application.DTOS.Response.CommentDto;
 using Teachers.Application.DTOS.Response.EducationDto;
+using Teachers.Application.DTOS.Response.SubjectDto;
 using Teachers.Application.DTOS.Response.TeacherDto;
 using Teachers.Application.DTOS.Response.TeacherSubjectDto;
 using Teachers.Application.ServiceResponse;
@@ -20,14 +22,17 @@ public class TeachersController : ControllerBase
     private readonly ITeacherServices _teacherServices;
     private readonly ITeacherSubjectServices _teacherSubjectServices;
     private readonly ICommentServices _commentServices;
+    private readonly ISubjectServices _subjectServices;
 
     public TeachersController(IEducationServices educationServices, ITeacherServices teacherServices,
-        ITeacherSubjectServices teacherSubjectServices, ICommentServices commentServices)
+        ITeacherSubjectServices teacherSubjectServices, ICommentServices commentServices,
+        ISubjectServices subjectServices)
     {
         _educationServices = educationServices;
         _teacherServices = teacherServices;
         _teacherSubjectServices = teacherSubjectServices;
         _commentServices = commentServices;
+        _subjectServices = subjectServices;
     }
 
     // Teachers Controller 
@@ -117,7 +122,7 @@ public class TeachersController : ControllerBase
 
     [Route("getAllTeachers")]
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<GetTeacherListResponseDto>>> GetTeacherList(string? searchTerm,
+    public async Task<ActionResult<ServiceResponse<List<GetTeacherListResponseDto>>>> GetTeacherList(string? searchTerm,
         int page, int pageSize)
     {
         try
@@ -231,6 +236,26 @@ public class TeachersController : ControllerBase
         try
         {
             var result = await _teacherSubjectServices.GetTeacherSubject(teacherId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [Route("getSearchedSubjects")]
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<GetSubjectListResponseDto>>> GetSearchedSubject(string? searchTerm)
+    {
+        try
+        {
+            var result = await _subjectServices.GetSearchedSubjects(searchTerm);
             if (result.Success)
             {
                 return Ok(result);

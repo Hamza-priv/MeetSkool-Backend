@@ -10,5 +10,5 @@ public interface ITeacherServices
     Task<ServiceResponse<UpdateTeacherResponseDto>> UpdateTeacher(UpdateTeacherRequestDto updateTeacherDto);
     Task<ServiceResponse<bool>> DeleteTeacher(string teacherId);
     Task<ServiceResponse<GetAllInfoOfTeacherResponseDto>> GetAllInfoOfTeacher(string id);
-    Task<ServiceResponse<GetTeacherListResponseDto>> GetAllTeachers(string? searchTerm, int page, int pageSize);
+    Task<ServiceResponse<List<GetTeacherListResponseDto>>> GetAllTeachers(string? searchTerm, int page, int pageSize);
 }

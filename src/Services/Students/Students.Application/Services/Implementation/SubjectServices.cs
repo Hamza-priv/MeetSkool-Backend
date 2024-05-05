@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Students.Application.DTOS.Response.SubjectDto;
+using Students.Application.ServiceResponse;
 using Students.Application.Services.Interfaces;
 using Students.Core.IRepository;
 
@@ -28,6 +29,34 @@ public class SubjectServices : ISubjectServices
         {
             Console.WriteLine(e);
             throw;
+        }
+    }
+
+    public async Task<ServiceResponse<GetSubjectListResponseDto>> GetSearchedSubjects(string? searchTerm)
+    {
+        var getSearchedSubjectResponse = new ServiceResponse<GetSubjectListResponseDto>()
+        {
+            Data = new GetSubjectListResponseDto()
+        };
+        try
+        {
+            var subjectList = await _subjectRepository.SearchSubjects(searchTerm);
+            if (subjectList.Count > 0)
+            {
+                getSearchedSubjectResponse.Data = _mapper.Map<GetSubjectListResponseDto>(subjectList);
+                getSearchedSubjectResponse.Messages.Add("Subjects found");
+                return getSearchedSubjectResponse;
+            }
+
+            getSearchedSubjectResponse.Error.Add("No subjects found");
+            getSearchedSubjectResponse.Success = false;
+            return getSearchedSubjectResponse;
+        }
+        catch (Exception e)
+        {
+            getSearchedSubjectResponse.Error.Add(e.Message);
+            getSearchedSubjectResponse.Success = false;
+            return getSearchedSubjectResponse;
         }
     }
 }

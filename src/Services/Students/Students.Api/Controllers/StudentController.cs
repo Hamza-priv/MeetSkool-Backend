@@ -7,6 +7,7 @@ using Students.Application.DTOS.Response.EducationDto;
 using Students.Application.DTOS.Response.FriendDto;
 using Students.Application.DTOS.Response.StudentDto;
 using Students.Application.DTOS.Response.StudentSubjectDto;
+using Students.Application.DTOS.Response.SubjectDto;
 using Students.Application.ServiceResponse;
 using Students.Application.Services.Interfaces;
 
@@ -20,14 +21,17 @@ public class StudentController : ControllerBase
     private readonly IStudentServices _studentServices;
     private readonly IStudentSubjectServices _studentSubjectServices;
     private readonly IFriendServices _friendServices;
+    private readonly ISubjectServices _subjectServices;
 
     public StudentController(IEducationServices educationServices, IStudentServices studentServices,
-        IStudentSubjectServices studentSubjectServices, IFriendServices friendServices)
+        IStudentSubjectServices studentSubjectServices, IFriendServices friendServices,
+        ISubjectServices subjectServices)
     {
         _educationServices = educationServices;
         _studentServices = studentServices;
         _studentSubjectServices = studentSubjectServices;
         _friendServices = friendServices;
+        _subjectServices = subjectServices;
     }
 
     // Student Controller
@@ -117,7 +121,7 @@ public class StudentController : ControllerBase
 
     [Route("getAllStudents")]
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<GetStudentListResponseDto>>> GetStudentList(string? searchTerm,
+    public async Task<ActionResult<ServiceResponse<List<GetStudentListResponseDto>>>> GetStudentList(string? searchTerm,
         int page, int pageSize)
     {
         try
@@ -244,6 +248,25 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Route("getSearchedSubjects")]
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<GetSubjectListResponseDto>>> GetSearchedSubject(string? searchTerm)
+    {
+        try
+        {
+            var result = await _subjectServices.GetSearchedSubjects(searchTerm);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
     // Friends Controller
 
     [Route("addStudentFriend")]

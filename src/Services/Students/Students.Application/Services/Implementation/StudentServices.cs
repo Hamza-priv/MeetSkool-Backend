@@ -180,20 +180,19 @@ public class StudentServices : IStudentServices
         }
     }
 
-    public async Task<ServiceResponse<GetStudentListResponseDto>> GetAllStudents(string? searchTerm, int page,
+    public async Task<ServiceResponse<List<GetStudentListResponseDto>>> GetAllStudents(string? searchTerm, int page,
         int pageSize)
     {
-        var getStudentListResponse = new ServiceResponse<GetStudentListResponseDto>()
-        {
-            Data = new GetStudentListResponseDto()
-        };
+        var getStudentListResponse = new ServiceResponse<List<GetStudentListResponseDto>>();
         try
         {
             var students = await _studentRepository.SearchStudents(searchTerm);
             if (students.Count > 0)
             {
+                /*
                 var list = await Pagination<Student>.GetPaginatedList(students.AsQueryable(), page, pageSize);
-                getStudentListResponse.Data = _mapper.Map<GetStudentListResponseDto>(list);
+                */
+                getStudentListResponse.Data = _mapper.Map<List<GetStudentListResponseDto>>(students);
                 getStudentListResponse.Messages.Add("Students found successfully");
                 return getStudentListResponse;
             }
