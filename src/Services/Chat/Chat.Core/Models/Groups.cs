@@ -12,5 +12,5 @@ public class Groups
     public required string GroupOwnerId { get; set; }
     public required string GroupName { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now.ToLocalTime();
-    public ICollection<GroupMember>? GroupMembers { get; set; }
+    public ICollection<GroupMember>? GroupMembers { get; set; } = new List<GroupMember>();
 }
