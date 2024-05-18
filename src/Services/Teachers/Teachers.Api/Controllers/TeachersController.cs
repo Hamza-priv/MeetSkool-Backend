@@ -36,7 +36,6 @@ public class TeachersController : ControllerBase
     }
 
     // Teachers Controller 
-
     [Route("createTeacher")]
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<AddTeacherResponseDto>>> CreateTeacher(
