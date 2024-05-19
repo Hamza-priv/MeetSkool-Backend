@@ -8,5 +8,5 @@ public interface IChatServices
     Task RemoveUserFromGroup(string userLeftMessage);
     Task SendMessageToGroup(string message);
     
-    Task SendMessageToUser(string fromuserId, string message);
+    Task SendMessageToUser(string fromUserId, string message);
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chat.Core.Models;
 
-public abstract class GroupMember
+public class GroupMember
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]

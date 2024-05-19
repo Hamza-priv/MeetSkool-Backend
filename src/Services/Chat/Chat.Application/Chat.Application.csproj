@@ -7,10 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="13.0.1"/>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2-develop.1560" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Chat.Infrastructure\Chat.Infrastructure.csproj" />
+        <ProjectReference Include="..\Chat.Infrastructure\Chat.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Contracts\Contracts.csproj" />
     </ItemGroup>
 </Project>

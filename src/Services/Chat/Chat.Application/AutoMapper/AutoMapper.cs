@@ -1,6 +1,25 @@
-﻿namespace Chat.Application.AutoMapper;
+﻿using AutoMapper;
+using Chat.Application.Dtos.Request.Groups;
+using Chat.Application.Dtos.Response.Messages;
+using Chat.Core.Models;
+using Contracts;
 
-public class AutoMapper
+namespace Chat.Application.AutoMapper;
+
+public class AutoMapper : Profile
 {
-    
+    public AutoMapper()
+    {
+        // Source ---> Destination
+
+        // Response Mapping
+
+        CreateMap<Messages, GetUserConversationResponseDto>();
+        CreateMap<Messages, GetUserGroupMessagesResponseDto>();
+
+        // Request Mapping
+
+        CreateMap<AddMemberInGroupRequestDto, AddMemberInGroupEvent>();
+        CreateMap<RemoveMemberFromGroupRequestDto, RemoveMemberFromGroupEvent>();
+    }
 }

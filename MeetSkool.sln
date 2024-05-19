@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Application", "src\Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Infrastructure", "src\Services\Chat\Chat.Infrastructure\Chat.Infrastructure.csproj", "{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "src\Services\Chat\Contracts\Contracts.csproj", "{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +172,7 @@ Global
 		{4BE4E797-9581-414F-BAA3-376ADB8444FF} = {367ADD2C-166F-4A0F-AC94-CD0972E43939}
 		{45ADE9B8-231C-4D1D-B469-7B95E38B33B7} = {367ADD2C-166F-4A0F-AC94-CD0972E43939}
 		{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11} = {367ADD2C-166F-4A0F-AC94-CD0972E43939}
+		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370} = {367ADD2C-166F-4A0F-AC94-CD0972E43939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2099F770-E583-4FDE-8A7E-C1793C7B18D0}
