@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Chat.Application.Dtos.Request.Groups;
+using Chat.Application.Dtos.Request.Messages;
 using Chat.Application.Dtos.Response.Messages;
 using Chat.Core.Models;
 using Contracts;
@@ -21,5 +22,7 @@ public class AutoMapper : Profile
 
         CreateMap<AddMemberInGroupRequestDto, AddMemberInGroupEvent>();
         CreateMap<RemoveMemberFromGroupRequestDto, RemoveMemberFromGroupEvent>();
+        CreateMap<AddGroupMessageRequestDto, Messages>();
+        CreateMap<AddConversationMessageRequestDto, Messages>();
     }
 }

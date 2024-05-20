@@ -1,20 +1,38 @@
 ﻿using Chat.Application.Services.Interface;
+using Chat.Core.IRepository;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Chat.Application.Services.Implementation;
 
 public sealed class ChatServices : Hub<IChatServices>
 {
+    private readonly IGroupRepository _groupRepository;
+    private readonly IPublisherServices _publisherServices;
+
+    public ChatServices(IGroupRepository groupRepository, IPublisherServices publisherServices)
+    {
+        _groupRepository = groupRepository;
+        _publisherServices = publisherServices;
+    }
+
     public override async Task OnConnectedAsync()
     {
         await Clients.Client(Context.ConnectionId)
             .UserConnected("Your are connected to our system " + $"{Context.ConnectionId}");
     }
 
-    public async Task CreateGroup(string groupId, string ownerId, string ownerName)
+    public async Task CreateGroup(string groupId, string ownerId, string ownerName, string groupName)
     {
-        await Groups.AddToGroupAsync(ownerId, groupId);
-        await Clients.Group(groupId).AddUserToGroup($"{ownerName} " + "has created this group");
+        try
+        {
+            await Groups.AddToGroupAsync(ownerId, groupId);
+            await Clients.Group(groupId).AddUserToGroup($"{ownerName} " + "has created this group");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task AddUserToGroup(string groupId, string userId, string userName)

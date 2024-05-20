@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Chat.Application.Dtos.Request.Groups;
+using Chat.Application.Dtos.Request.Messages;
 using Chat.Application.Services.Interface;
+using Chat.Core.Models;
 using Contracts;
 using MassTransit;
 
@@ -31,19 +33,46 @@ public class PublisherServices : IPublisherServices
         }
     }
 
-    public async Task SaveGroup()
+    public async Task SaveGroup(CreateGroupRequestDto createGroup)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var group = _mapper.Map<Groups>(createGroup);
+            await _publishEndpoint.Publish(group, cancellationToken: default);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
-    public async Task SaveConversationMessage()
+    public async Task SaveConversationMessage(AddConversationMessageRequestDto conversationMessage)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var message = _mapper.Map<Messages>(conversationMessage);
+            await _publishEndpoint.Publish(message, cancellationToken: default);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
-    public async Task SaveGroupMessage()
+    public async Task SaveGroupMessage(AddGroupMessageRequestDto groupMessage)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var message = _mapper.Map<Messages>(groupMessage);
+            await _publishEndpoint.Publish(message, cancellationToken: default);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task RemoveGroupMember(RemoveMemberFromGroupRequestDto removeMember)

@@ -39,18 +39,18 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
     }
 
-    public async Task<T> AddAsync(T entity)
+    public async Task<bool> AddAsync(T entity)
     {
         try
         {
             _chatDbContext.Set<T>().Add(entity);
             await _chatDbContext.SaveChangesAsync();
-            return entity;
+            return true;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            return false;
         }
     }
 
