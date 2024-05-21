@@ -11,4 +11,6 @@ public class ChatDbContext : DbContext
 
     public DbSet<Messages> Messages { get; set; }
     public DbSet<Groups> Groups { get; set; }
+    public DbSet<UserConnections> UserConnections { get; set; }
+    public DbSet<Conversations> Conversations { get; set; }
 }
