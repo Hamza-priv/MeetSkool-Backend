@@ -7,5 +7,4 @@ public class AddConversationMessageRequestDto
     public string? SenderName { get; set; }
     public string? ReceiverId { get; set; }
     public string? ReceiverName { get; set; }
-    public string? GroupId { get; set; }
 }

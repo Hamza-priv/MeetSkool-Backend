@@ -44,7 +44,7 @@ public class GroupRepository : GenericRepository<Groups>, IGroupRepository
 
             if (group.GroupMembers == null)
             {
-                return ;
+                return;
             }
 
             var memberToRemove = group.GroupMembers.FirstOrDefault(x => x.GroupMemberId == memberId);
@@ -81,6 +81,21 @@ public class GroupRepository : GenericRepository<Groups>, IGroupRepository
             });
             await _chatDbContext.SaveChangesAsync();
             return;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<int> TotalMembersInGroup(string groupId)
+    {
+        try
+        {
+            var group = await _chatDbContext.Groups.Include(groups => groups.GroupMembers)
+                .FirstOrDefaultAsync(x => x.GroupId == groupId);
+            return group?.GroupMembers?.Count ?? 0;
         }
         catch (Exception e)
         {
