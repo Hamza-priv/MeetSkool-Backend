@@ -1,7 +1,10 @@
-﻿namespace Chat.Core.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Chat.Core.Models;
 
 public class Messages
 {
+    [Key]
     public Guid MessageId { get; set; } = Guid.NewGuid();
     public string? Message { get; set; }
     public string? SenderId { get; set; }

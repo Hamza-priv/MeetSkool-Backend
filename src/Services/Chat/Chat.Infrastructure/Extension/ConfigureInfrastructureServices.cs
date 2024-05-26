@@ -1,6 +1,8 @@
-﻿using Chat.Core.IRepository;
+﻿using System.Reflection;
+using Chat.Core.IRepository;
 using Chat.Infrastructure.Data;
 using Chat.Infrastructure.Repository;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,9 @@ public static class ConfigureInfrastructureServices
         serviceCollection.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         serviceCollection.AddScoped<IGroupRepository, GroupRepository>();
         serviceCollection.AddScoped<IMessageRepository, MessageRepository>();
+        serviceCollection.AddScoped<IConversationRepository, ConversationRepository>();
+        serviceCollection.AddScoped<IUserConnectionRepository, UserConnectionRepository>();
+        
         return serviceCollection;
     }
 }

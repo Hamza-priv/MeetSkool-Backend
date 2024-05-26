@@ -10,7 +10,7 @@ public class GroupRepository : GenericRepository<Groups>, IGroupRepository
 {
     private readonly ChatDbContext _chatDbContext;
 
-    protected GroupRepository(ChatDbContext chatDbContext) : base(chatDbContext)
+    public GroupRepository(ChatDbContext chatDbContext) : base(chatDbContext)
     {
         _chatDbContext = chatDbContext;
     }

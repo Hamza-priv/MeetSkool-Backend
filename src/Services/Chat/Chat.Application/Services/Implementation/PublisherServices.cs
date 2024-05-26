@@ -11,12 +11,12 @@ namespace Chat.Application.Services.Implementation;
 public class PublisherServices : IPublisherServices
 {
     private readonly IMapper _mapper;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IBus _publishEndpoint;
 
-    public PublisherServices(IMapper mapper, IPublishEndpoint publishEndpoint)
+    public PublisherServices(IMapper mapper, IBus bus)
     {
         _mapper = mapper;
-        _publishEndpoint = publishEndpoint;
+        _publishEndpoint = bus;
     }
 
     public async Task AddGroupMembers(AddMemberInGroupRequestDto addMember)
@@ -66,7 +66,7 @@ public class PublisherServices : IPublisherServices
         try
         {
             var message = _mapper.Map<Messages>(groupMessage);
-            await _publishEndpoint.Publish(message, cancellationToken: default);
+            await _publishEndpoint.Publish(message);
         }
         catch (Exception e)
         {

@@ -9,7 +9,7 @@ public class MessageRepository : GenericRepository<Messages>, IMessageRepository
 {
     private readonly ChatDbContext _chatDbContext;
 
-    protected MessageRepository(ChatDbContext chatDbContext) : base(chatDbContext)
+    public MessageRepository(ChatDbContext chatDbContext) : base(chatDbContext)
     {
         _chatDbContext = chatDbContext;
     }

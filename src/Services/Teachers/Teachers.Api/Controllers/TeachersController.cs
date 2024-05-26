@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Teachers.Application.DTOS.Request.CommentDto;
@@ -36,6 +37,7 @@ public class TeachersController : ControllerBase
     }
 
     // Teachers Controller 
+    [Authorize("ApiScope", Roles = "Teacher")]
     [Route("createTeacher")]
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<AddTeacherResponseDto>>> CreateTeacher(

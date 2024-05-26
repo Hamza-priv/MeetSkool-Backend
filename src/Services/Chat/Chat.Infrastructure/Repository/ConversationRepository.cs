@@ -9,7 +9,7 @@ public class ConversationRepository : GenericRepository<Conversations>, IConvers
 {
     private readonly ChatDbContext _chatDbContext;
 
-    protected ConversationRepository(ChatDbContext chatDbContext) : base(chatDbContext)
+    public ConversationRepository(ChatDbContext chatDbContext) : base(chatDbContext)
     {
         _chatDbContext = chatDbContext;
     }

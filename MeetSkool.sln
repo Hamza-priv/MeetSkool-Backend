@@ -13,51 +13,54 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{2E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{12D2EBDD-B8CE-4D84-959A-08268C8CA7CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "src\ApiGateway\ApiGateway\ApiGateway.csproj", "{4CC71C0F-4778-4B12-9A2D-DB244CF7A986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "src\ApiGateway\ApiGateway\ApiGateway.csproj", "{4CC71C0F-4778-4B12-9A2D-DB244CF7A986}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlock", "src\BuildingBlocks\BuildingBlock\BuildingBlock.csproj", "{4C57D694-86E4-447A-B623-0E7CDEC453D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlock", "src\BuildingBlocks\BuildingBlock\BuildingBlock.csproj", "{4C57D694-86E4-447A-B623-0E7CDEC453D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Infrastructure", "src\Services\Identity\Identity.Infrastructure\Identity.Infrastructure.csproj", "{71124FAE-4326-4DB8-BB8D-2B757B1B32B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Infrastructure", "src\Services\Identity\Identity.Infrastructure\Identity.Infrastructure.csproj", "{71124FAE-4326-4DB8-BB8D-2B757B1B32B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Core", "src\Services\Identity\Identity.Core\Identity.Core.csproj", "{088CF524-9F9E-413F-A3C9-4A7330400D7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Core", "src\Services\Identity\Identity.Core\Identity.Core.csproj", "{088CF524-9F9E-413F-A3C9-4A7330400D7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Application", "src\Services\Identity\Identity.Application\Identity.Application.csproj", "{88E27EAE-0693-4C65-B9B4-29EBD6A101E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Application", "src\Services\Identity\Identity.Application\Identity.Application.csproj", "{88E27EAE-0693-4C65-B9B4-29EBD6A101E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Api", "src\Services\Identity\Identity.Api\Identity.Api.csproj", "{6359D953-3BAA-4692-BCC3-EB144BB7D2CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Api", "src\Services\Identity\Identity.Api\Identity.Api.csproj", "{6359D953-3BAA-4692-BCC3-EB144BB7D2CD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Students", "Students", "{A19DF729-C323-40BE-A4B6-4FF3902CF03D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Students.Application", "src\Services\Students\Students.Application\Students.Application.csproj", "{2C4A72BD-841C-48C0-969A-7EBF4EC44300}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Application", "src\Services\Students\Students.Application\Students.Application.csproj", "{2C4A72BD-841C-48C0-969A-7EBF4EC44300}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Students.Core", "src\Services\Students\Students.Core\Students.Core.csproj", "{D341EB9E-0777-45C1-886C-4829C4824223}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Core", "src\Services\Students\Students.Core\Students.Core.csproj", "{D341EB9E-0777-45C1-886C-4829C4824223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Students.Infrastructure", "src\Services\Students\Students.Infrastructure\Students.Infrastructure.csproj", "{477B8D5B-E776-472B-900C-602FC88ABFC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Infrastructure", "src\Services\Students\Students.Infrastructure\Students.Infrastructure.csproj", "{477B8D5B-E776-472B-900C-602FC88ABFC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Students.Api", "src\Services\Students\Students.Api\Students.Api.csproj", "{D02D1A28-D804-4461-812D-A7053C5FD185}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Api", "src\Services\Students\Students.Api\Students.Api.csproj", "{D02D1A28-D804-4461-812D-A7053C5FD185}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Teachers", "Teachers", "{2E43E30B-4D4F-4A39-A4A5-531F365F6411}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teachers.Core", "src\Services\Teachers\Teachers.Core\Teachers.Core.csproj", "{8729B162-0336-4C47-AC99-76D8E5B868A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teachers.Core", "src\Services\Teachers\Teachers.Core\Teachers.Core.csproj", "{8729B162-0336-4C47-AC99-76D8E5B868A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teachers.Infrastructure", "src\Services\Teachers\Teachers.Infrastructure\Teachers.Infrastructure.csproj", "{25E28262-F197-4C1C-9219-BF3FFD583011}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teachers.Infrastructure", "src\Services\Teachers\Teachers.Infrastructure\Teachers.Infrastructure.csproj", "{25E28262-F197-4C1C-9219-BF3FFD583011}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teachers.Application", "src\Services\Teachers\Teachers.Application\Teachers.Application.csproj", "{5617EA97-0969-44AE-B713-023693822FA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teachers.Application", "src\Services\Teachers\Teachers.Application\Teachers.Application.csproj", "{5617EA97-0969-44AE-B713-023693822FA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teachers.Api", "src\Services\Teachers\Teachers.Api\Teachers.Api.csproj", "{6FF0E3BD-64E6-41B3-904A-89169F62BD62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teachers.Api", "src\Services\Teachers\Teachers.Api\Teachers.Api.csproj", "{6FF0E3BD-64E6-41B3-904A-89169F62BD62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{E957A6C9-193C-4287-9AB9-8A81F5001D08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{367ADD2C-166F-4A0F-AC94-CD0972E43939}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Api", "src\Services\Chat\Chat.Api\Chat.Api.csproj", "{CB53AF1F-A80B-4F8D-9509-CEC7252CDA7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Api", "src\Services\Chat\Chat.Api\Chat.Api.csproj", "{CB53AF1F-A80B-4F8D-9509-CEC7252CDA7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Core", "src\Services\Chat\Chat.Core\Chat.Core.csproj", "{4BE4E797-9581-414F-BAA3-376ADB8444FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Core", "src\Services\Chat\Chat.Core\Chat.Core.csproj", "{4BE4E797-9581-414F-BAA3-376ADB8444FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Application", "src\Services\Chat\Chat.Application\Chat.Application.csproj", "{45ADE9B8-231C-4D1D-B469-7B95E38B33B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Application", "src\Services\Chat\Chat.Application\Chat.Application.csproj", "{45ADE9B8-231C-4D1D-B469-7B95E38B33B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Infrastructure", "src\Services\Chat\Chat.Infrastructure\Chat.Infrastructure.csproj", "{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Infrastructure", "src\Services\Chat\Chat.Infrastructure\Chat.Infrastructure.csproj", "{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "src\Services\Chat\Contracts\Contracts.csproj", "{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "src\Services\Chat\Contracts\Contracts.csproj", "{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

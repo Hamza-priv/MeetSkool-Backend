@@ -18,6 +18,7 @@ public class AddMessageConsumer : IConsumer<Messages>
         try
         {
             await _messageRepository.AddAsync(context.Message);
+            Console.WriteLine("Worked hurry");
         }
         catch (Exception e)
         {

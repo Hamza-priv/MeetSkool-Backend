@@ -11,7 +11,6 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="13.0.1"/>
-        <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2-develop.1560" />
     </ItemGroup>
 
     <ItemGroup>

@@ -4,7 +4,7 @@ namespace Chat.Infrastructure.Data;
 
 public class ChatDbContextSeed
 {
-    public static async Task SeedAsync(ChatDbContext context, ILogger<ChatDbContext> logger)
+    public static async Task SeedAsync(ChatDbContext context, ILogger<ChatDbContextSeed> logger)
     {
         if (!context.Messages.Any())
         {

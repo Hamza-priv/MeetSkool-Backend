@@ -1,6 +1,10 @@
 ﻿using System.Reflection;
 using Chat.Application.Services.Implementation;
 using Chat.Application.Services.Interface;
+using Chat.Core.Models;
+using Chat.Infrastructure.Consumer;
+using Contracts;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Chat.Application.Extension;

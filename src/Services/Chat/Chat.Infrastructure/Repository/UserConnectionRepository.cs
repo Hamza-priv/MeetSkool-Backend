@@ -6,7 +6,7 @@ namespace Chat.Infrastructure.Repository;
 
 public class UserConnectionRepository : GenericRepository<UserConnections>, IUserConnectionRepository
 {
-    protected UserConnectionRepository(ChatDbContext chatDbContext) : base(chatDbContext)
+    public UserConnectionRepository(ChatDbContext chatDbContext) : base(chatDbContext)
     {
     }
 }

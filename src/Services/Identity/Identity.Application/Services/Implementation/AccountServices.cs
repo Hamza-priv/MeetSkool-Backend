@@ -185,11 +185,25 @@ public class AccountServices : IAccountServices
         }
     }
 
-    public async Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string newPassword)
+    public async Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code,
+        string newPassword)
     {
         try
         {
             return await _applicationServices.ResetPassword(userId, code, newPassword);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<bool> IsEmailConfirmed(Guid userId)
+    {
+        try
+        {
+            return await _applicationServices.IsEmailConfirmed(userId);
         }
         catch (Exception e)
         {

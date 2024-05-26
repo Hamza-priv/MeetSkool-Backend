@@ -22,4 +22,5 @@ public interface IAccountServices
     Task<ServiceResponse<int>> GetTeachersCount();
     Task<ServiceResponse<int>> GetStudentsCount();
     Task<ServiceResponse<ResetPasswordResponse>> ResetPassword(string userId, string code, string newPassword);
+    Task<bool> IsEmailConfirmed(Guid userId);
 }

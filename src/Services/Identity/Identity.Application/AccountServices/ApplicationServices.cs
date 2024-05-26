@@ -566,4 +566,18 @@ public class ApplicationServices
             return signInResponse;
         }
     }
+
+    public async Task<bool> IsEmailConfirmed(Guid userId)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            return user?.EmailConfirmed ?? false;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

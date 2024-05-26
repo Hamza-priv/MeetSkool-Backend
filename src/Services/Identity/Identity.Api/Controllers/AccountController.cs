@@ -1,6 +1,7 @@
 using AutoMapper;
 using Identity.Application.Services.Interfaces;
 using Identity.Application.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,21 @@ public class AccountController : ControllerBase
 
             response.Error.Add("Email not sent");
             return Ok(response);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+
+    [HttpGet]
+    [Route("isEmailConfirmed")]
+    public async Task<ActionResult<bool>> IsEmailConfirmed(Guid userId)
+    {
+        try
+        {
+            var check = await _accountServices.IsEmailConfirmed(userId);
+            return Ok(check);
         }
         catch (Exception e)
         {
