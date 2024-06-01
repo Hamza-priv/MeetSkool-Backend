@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Students.Application.DTOS.Request.EducationDto;
 using Students.Application.DTOS.Request.FriendDto;
@@ -57,6 +58,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student")]
     [Route("updateStudent")]
     [HttpPatch]
     public async Task<ActionResult<ServiceResponse<UpdateStudentResponseDto>>> UpdateStudent(
@@ -79,6 +81,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student,Admin")]
     [Route("deleteStudent")]
     [HttpDelete]
     public async Task<ActionResult<ServiceResponse<bool>>> DeleteStudent(string studentId)
@@ -99,6 +102,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student,Teacher")]
     [Route("getStudentInfo")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetAllInfoOfStudentResponseDto>>> GetStudentInfo(string studentId)
@@ -119,6 +123,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student,Admin")]
     [Route("getAllStudents")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<GetStudentListResponseDto>>>> GetStudentList(string? searchTerm,
@@ -162,6 +167,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student")]
     [Route("updateStudentEducation")]
     [HttpPatch]
     public async Task<ActionResult<ServiceResponse<UpdateEducationResponseDto>>> UpdateStudentEducation(
@@ -184,6 +190,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student")]
     [Route("getStudentEducation")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetStudentEducationResponseDto>>> GetStudentEducation(
@@ -228,6 +235,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student")]
     [Route("getStudentSubject")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetStudentSubjectResponseDto>>> GetStudentSubject(string studentId)
@@ -269,6 +277,7 @@ public class StudentController : ControllerBase
     }
     // Friends Controller
 
+    [Authorize(Roles = "Student")]
     [Route("addStudentFriend")]
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<AddFriendResponseDto>>> AddStudentFriend(
@@ -290,6 +299,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student")]
     [Route("getStudentFriends")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<GetStudentFriendResponseDto>>>> GetStudentFriends(
@@ -311,6 +321,7 @@ public class StudentController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Student")]
     [Route("deleteStudentFriends")]
     [HttpDelete]
     public async Task<ActionResult<ServiceResponse<bool>>> DeleteStudentFriends(string friendId, string studentId)

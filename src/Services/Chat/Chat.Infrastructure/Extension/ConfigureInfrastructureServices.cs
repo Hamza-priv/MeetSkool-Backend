@@ -2,7 +2,6 @@
 using Chat.Core.IRepository;
 using Chat.Infrastructure.Data;
 using Chat.Infrastructure.Repository;
-using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

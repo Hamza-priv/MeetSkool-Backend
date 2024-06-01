@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Teachers.Application.DTOS.Request.CommentDto;
 using Teachers.Application.DTOS.Request.EducationDto;
@@ -37,7 +36,6 @@ public class TeachersController : ControllerBase
     }
 
     // Teachers Controller 
-    [Authorize("ApiScope", Roles = "Teacher")]
     [Route("createTeacher")]
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<AddTeacherResponseDto>>> CreateTeacher(
@@ -58,7 +56,7 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    [Authorize(Roles = "Teacher")]
     [Route("updateTeacher")]
     [HttpPatch]
     public async Task<ActionResult<ServiceResponse<UpdateTeacherResponseDto>>> UpdateStudent(
@@ -80,7 +78,7 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    [Authorize(Roles = "Teacher,Admin")]
     [Route("deleteTeacher")]
     [HttpDelete]
     public async Task<ActionResult<ServiceResponse<bool>>> DeleteTeacher(string teacherId)
@@ -100,7 +98,8 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
+    [Authorize(Roles = "Teacher,Student")]
     [Route("getTeacherInfo")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetAllInfoOfTeacherResponseDto>>> GetTeacherInfo(string teacherId)
@@ -120,7 +119,7 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    [Authorize(Roles = "Admin,Student")]
     [Route("getAllTeachers")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<GetTeacherListResponseDto>>>> GetTeacherList(string? searchTerm,
@@ -141,6 +140,7 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+    
     // Education Controller
 
     [Route("createTeacherEducation")]
@@ -163,7 +163,8 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
+    [Authorize(Roles = "Teacher")]
     [Route("updateTeacherEducation")]
     [HttpPatch]
     public async Task<ActionResult<ServiceResponse<UpdateEducationResponseDto>>> UpdateTeacherEducation(
@@ -185,7 +186,8 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
+    [Authorize(Roles = "Teacher,Student")]
     [Route("getTeacherEducation")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetTeacherEducationResponseDto>>> GetTeacherEducation(
@@ -207,7 +209,7 @@ public class TeachersController : ControllerBase
         }
     }
 
-    // StudentSubject Controller
+    // TeacherSubject Controller
 
     [Route("addTeacherSubject")]
     [HttpPost]
@@ -229,7 +231,8 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
+    [Authorize(Roles = "Teacher,Student")]
     [Route("getTeacherSubject")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetTeacherSubjectResponseDto>>> GetTeacherSubject(string teacherId)
@@ -271,7 +274,8 @@ public class TeachersController : ControllerBase
     }
 
     // Comments Controller
-
+    
+    [Authorize(Roles = "Student")]
     [Route("addComment")]
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<AddCommentResponseDto>>> AddComment(
@@ -292,7 +296,8 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
+    [Authorize(Roles = "Teacher,Student")]
     [Route("getComments")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<GetCommentResponseDto>>>> GetComments(
@@ -313,7 +318,8 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
+    [Authorize(Roles = "Student")]
     [Route("updateComment")]
     [HttpDelete]
     public async Task<ActionResult<ServiceResponse<UpdateCommentResponseDto>>> UpdateComment(

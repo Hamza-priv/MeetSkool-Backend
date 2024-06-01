@@ -13,15 +13,16 @@ namespace Chat.Application.Services.Implementation;
 public sealed class ChatServices : Hub<IChatServices>
 {
     private readonly IGroupRepository _groupRepository;
-    private readonly IPublisherServices _publisherServices;
-    private readonly IUserConnectionRepository _connectionRepository;
+    private readonly IMessageServices _messageServices;
+    private readonly IGroupServices _groupServices;
 
-    public ChatServices(IGroupRepository groupRepository, IPublisherServices publisherServices,
-        IUserConnectionRepository connectionRepository)
+
+    public ChatServices(IGroupRepository groupRepository, IMessageServices messageServices,
+        IGroupServices groupServices)
     {
         _groupRepository = groupRepository;
-        _publisherServices = publisherServices;
-        _connectionRepository = connectionRepository;
+        _messageServices = messageServices;
+        _groupServices = groupServices;
     }
 
     public override async Task OnConnectedAsync()
@@ -53,7 +54,7 @@ public sealed class ChatServices : Hub<IChatServices>
                 GroupOwnerName = ownerName,
                 GroupName = groupName
             };
-            _publisherServices.SaveGroup(group);
+            await _groupServices.SaveGroup(group);
         }
         catch (Exception e)
         {
@@ -71,12 +72,15 @@ public sealed class ChatServices : Hub<IChatServices>
             var task = userId.Select(user => Groups.AddToGroupAsync(user, groupId)).ToList();
             await Task.WhenAll(task);
 
-            if (userId.Count > 0)
+            if (userId.Count > 6)
             {
                 await Clients.Group(groupId).AddUserToGroup($"All users have joined");
+                return;
             }
 
             await Clients.Group(groupId).AddUserToGroup($"User have joined");
+
+            // Todo for adding it in database repo need to be built
         }
 
         await Clients.Group(groupId).AddUserToGroup($"Can not add more then 5 members");
@@ -93,8 +97,7 @@ public sealed class ChatServices : Hub<IChatServices>
             MemberId = userId,
             GroupId = groupId
         };
-
-        _publisherServices.RemoveGroupMember(removeMember);
+        await _groupServices.RemoveGroupMember(removeMember);
     }
 
     public async Task SendMessageToGroup(string groupId, string message, string senderId, string senderName)
@@ -109,7 +112,7 @@ public sealed class ChatServices : Hub<IChatServices>
             SenderName = senderName
         };
 
-        _publisherServices.SaveGroupMessage(groupMessage);
+        await _messageServices.SaveGroupMessage(groupMessage);
     }
 
     public async Task SendMessageToUser(string receiverId, string senderId, string message, string senderName,
@@ -125,8 +128,7 @@ public sealed class ChatServices : Hub<IChatServices>
             ReceiverName = receiverName,
             Message = message
         };
-
-        _publisherServices.SaveConversationMessage(conversationMessage);
+        await _messageServices.SaveConversationMessage(conversationMessage);
     }
 
     public override Task OnDisconnectedAsync(Exception exception)

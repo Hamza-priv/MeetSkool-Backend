@@ -49,7 +49,7 @@ public class AccountController : ControllerBase
             return BadRequest(e);
         }
     }
-
+    
     [HttpGet]
     [Route("isEmailConfirmed")]
     public async Task<ActionResult<bool>> IsEmailConfirmed(Guid userId)

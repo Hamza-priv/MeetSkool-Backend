@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Chat.Application.Dtos.Request.Groups;
 using Chat.Application.Dtos.Request.Messages;
 using Chat.Application.Dtos.Response.Messages;
 using Chat.Application.ServiceResponse;
 using Chat.Application.Services.Interface;
 using Chat.Core.IRepository;
+using Chat.Core.Models;
 
 namespace Chat.Application.Services.Implementation;
 
@@ -79,6 +81,34 @@ public class MessageServices : IMessageServices
             groupMessagesResponse.Error.Add(e.Message);
             groupMessagesResponse.Success = false;
             return groupMessagesResponse;
+        }
+    }
+
+    public async Task SaveGroupMessage(AddGroupMessageRequestDto groupMessage)
+    {
+        try
+        {
+            var message = _mapper.Map<Messages>(groupMessage);
+            await _messageRepository.AddAsync(message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task SaveConversationMessage(AddConversationMessageRequestDto conversationMessage)
+    {
+        try
+        {
+            var message = _mapper.Map<Messages>(conversationMessage);
+            await _messageRepository.AddAsync(message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

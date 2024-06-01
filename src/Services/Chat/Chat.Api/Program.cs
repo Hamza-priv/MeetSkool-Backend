@@ -2,9 +2,7 @@ using System.Reflection;
 using Chat.Api;
 using Chat.Api.Extensions;
 using Chat.Application.Services.Implementation;
-using Chat.Infrastructure.Consumer;
 using Chat.Infrastructure.Data;
-using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,32 +15,6 @@ builder.Services.AddSwaggerGen();
 
 var configuration = builder.Configuration;
 builder.Services.AddProjectServices(configuration);
-
-builder.Services.AddMassTransit(busConfigurator =>
-{
-    busConfigurator.SetKebabCaseEndpointNameFormatter();
-
-    var assembly = Assembly.GetExecutingAssembly();
-    busConfigurator.AddConsumers(assembly);
-    busConfigurator.AddSagas(assembly);
-    busConfigurator.AddActivities(assembly);
-    busConfigurator.AddSagaStateMachines(assembly);
-
-    busConfigurator.UsingRabbitMq((context, cfg) =>
-    {
-        cfg.Host("localhost", "/", h =>
-        {
-            h.Username("guest");
-            h.Password("guest");
-        });
-        cfg.ConfigureEndpoints(context);
-    });
-
-    busConfigurator.SetInMemorySagaRepositoryProvider();
-});
-
-builder.Services.AddLogging(configure => configure.AddConsole());
-
 
 var app = builder.Build();
 app.MigrateDatabase<ChatDbContext>((context, services) =>

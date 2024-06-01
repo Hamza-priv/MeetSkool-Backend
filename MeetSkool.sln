@@ -48,9 +48,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{E957A6C9-193C-4287-9AB9-8A81F5001D08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{367ADD2C-166F-4A0F-AC94-CD0972E43939}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Api", "src\Services\Chat\Chat.Api\Chat.Api.csproj", "{CB53AF1F-A80B-4F8D-9509-CEC7252CDA7E}"
 EndProject
@@ -59,8 +56,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Application", "src\Services\Chat\Chat.Application\Chat.Application.csproj", "{45ADE9B8-231C-4D1D-B469-7B95E38B33B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Infrastructure", "src\Services\Chat\Chat.Infrastructure\Chat.Infrastructure.csproj", "{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "src\Services\Chat\Contracts\Contracts.csproj", "{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -140,10 +135,6 @@ Global
 		{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -175,7 +166,6 @@ Global
 		{4BE4E797-9581-414F-BAA3-376ADB8444FF} = {367ADD2C-166F-4A0F-AC94-CD0972E43939}
 		{45ADE9B8-231C-4D1D-B469-7B95E38B33B7} = {367ADD2C-166F-4A0F-AC94-CD0972E43939}
 		{85C20C6C-E3C7-4AAF-BB4D-15C2BA132B11} = {367ADD2C-166F-4A0F-AC94-CD0972E43939}
-		{9A6D5B2F-5CD4-468A-B2DB-16D4D47D2370} = {367ADD2C-166F-4A0F-AC94-CD0972E43939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2099F770-E583-4FDE-8A7E-C1793C7B18D0}
