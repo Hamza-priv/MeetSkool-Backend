@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Students.Application.DTOS.Request.StudentDto;
 using Students.Application.DTOS.Response.StudentDto;
-using Students.Application.Pagination;
 using Students.Application.ServiceResponse;
 using Students.Application.Services.Interfaces;
 using Students.Core.Entities;

@@ -13,7 +13,7 @@ public interface IAccountServices
     Task<ServiceResponse<List<MeetSkoolUser>>> GetTeachersList();
     Task<ServiceResponse<List<MeetSkoolUser>>> GetStudentsList();
     Task<ServiceResponse<UserSignInResponse>> PasswordSignInAsync(UserSignInModel signIn);
-    Task<ServiceResponse<List<string>>?> GetUserRoles(string email);
+    Task<string> GetUserRoles(string email);
 
     Task<ServiceResponse<IdentityResult>> DeleteUser(string email);
     Task<ServiceResponse<ConfirmEmailResponse>> ConfirmEmail(string userId, string code);

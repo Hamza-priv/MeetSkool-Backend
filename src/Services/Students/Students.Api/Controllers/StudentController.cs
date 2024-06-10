@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Students.Application.DTOS.Request.EducationDto;
 using Students.Application.DTOS.Request.FriendDto;
+using Students.Application.DTOS.Request.OrderDto;
 using Students.Application.DTOS.Request.StudentDto;
 using Students.Application.DTOS.Request.StudentSubjectDto;
 using Students.Application.DTOS.Response.EducationDto;
 using Students.Application.DTOS.Response.FriendDto;
+using Students.Application.DTOS.Response.OrderDto;
 using Students.Application.DTOS.Response.StudentDto;
 using Students.Application.DTOS.Response.StudentSubjectDto;
 using Students.Application.DTOS.Response.SubjectDto;
@@ -23,16 +25,18 @@ public class StudentController : ControllerBase
     private readonly IStudentSubjectServices _studentSubjectServices;
     private readonly IFriendServices _friendServices;
     private readonly ISubjectServices _subjectServices;
+    private readonly IOrderServices _orderServices;
 
     public StudentController(IEducationServices educationServices, IStudentServices studentServices,
         IStudentSubjectServices studentSubjectServices, IFriendServices friendServices,
-        ISubjectServices subjectServices)
+        ISubjectServices subjectServices, IOrderServices orderServices)
     {
         _educationServices = educationServices;
         _studentServices = studentServices;
         _studentSubjectServices = studentSubjectServices;
         _friendServices = friendServices;
         _subjectServices = subjectServices;
+        _orderServices = orderServices;
     }
 
     // Student Controller
@@ -329,6 +333,29 @@ public class StudentController : ControllerBase
         try
         {
             var result = await _friendServices.DeleteFriend(friendId, studentId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    // Order Controller
+
+    [Authorize(Roles = "Student")]
+    [Route("getStudentOrders")]
+    [HttpPost]
+    public async Task<ActionResult<ServiceResponse<GetOrdersResponseDto>>> GetOrders(string orderById)
+    {
+        try
+        {
+            var result = await _orderServices.GetOrders(orderById);
             if (result.Success)
             {
                 return Ok(result);

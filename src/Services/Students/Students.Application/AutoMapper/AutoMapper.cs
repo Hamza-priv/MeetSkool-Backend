@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Students.Application.DTOS.Request.EducationDto;
 using Students.Application.DTOS.Request.FriendDto;
+using Students.Application.DTOS.Request.OrderDto;
 using Students.Application.DTOS.Request.StudentDto;
 using Students.Application.DTOS.Request.StudentSubjectDto;
 using Students.Application.DTOS.Response.EducationDto;
@@ -26,6 +27,7 @@ public class AutoMapper : Profile
         CreateMap<UpdateEducationRequestDto, Education>();
         CreateMap<AddFriendRequestDto, Friend>();
         CreateMap<AddStudentSubjectRequestDto, StudentSubject>();
+        CreateMap<AddOrderRequestDto, Order>();
 
         //Response Mapping
 

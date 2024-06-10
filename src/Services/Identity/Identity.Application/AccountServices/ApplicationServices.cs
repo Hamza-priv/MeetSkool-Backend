@@ -71,8 +71,12 @@ public class ApplicationServices
                                 createUserResponse.Success = false;
                                 createUserResponse.Data = null;
                             }
+
+                            if (createUserResponse.Data != null)
+                                createUserResponse.Data.AccessToken = await GenerateJwToken(user.Email, user.Password);
                         }
                     }
+                    
                 }
                 else
                 {
@@ -460,27 +464,23 @@ public class ApplicationServices
         }
     }
 
-    public async Task<ServiceResponse<List<string>>?> GetUserRoles(string email)
+    public async Task<string?> GetUserRoles(string email)
     {
-        var userRoleResponse = new ServiceResponse<List<string>>();
+        var userRoleResponse = "";
         try
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
-                userRoleResponse.Data = (List<string>)await _userManager.GetRolesAsync(user);
-                userRoleResponse.Messages.Add("User Roles");
+                IList<string?> role = await _userManager.GetRolesAsync(user);
+                userRoleResponse = role[0];
                 return userRoleResponse;
             }
 
-            userRoleResponse.Error.Add("User not found");
-            userRoleResponse.Success = false;
             return userRoleResponse;
         }
         catch (Exception e)
         {
-            userRoleResponse.Error.Add(e.Message);
-            userRoleResponse.Success = false;
             return userRoleResponse;
         }
     }
@@ -520,9 +520,8 @@ public class ApplicationServices
         {
             if (user is { Email: not null, Password: not null })
             {
-                signInResponse.Data.SignInResult =
-                    await _signInManager.PasswordSignInAsync(user.Email, user.Password, true, false);
-                if (!signInResponse.Data.SignInResult.Succeeded)
+                var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, true, false);
+                if (!result.Succeeded)
                 {
                     signInResponse.Success = false;
                     signInResponse.Error.Add("Invalid Credentials");
@@ -532,6 +531,7 @@ public class ApplicationServices
                 var userInfo = await _userManager.FindByEmailAsync(user.Email);
                 signInResponse.Data.UserInfo = _mapper.Map<UserInfo>(userInfo);
                 signInResponse.Data.UserRoles = await GetUserRoles(user.Email);
+                signInResponse.Data.UserInfo.IsTeacher = signInResponse.Data.UserRoles != Constants.Student;
                 signInResponse.Messages.Add("User Signed In");
 
                 var client = new HttpClient();
@@ -573,6 +573,35 @@ public class ApplicationServices
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             return user?.EmailConfirmed ?? false;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    private async Task<AccessTokenModel> GenerateJwToken(string email, string password)
+    {
+        try
+        {
+            var client = new HttpClient();
+            var values = new Dictionary<string, string>
+            {
+                { "username", email },
+                { "password", password },
+                { "client_id", "client" },
+                { "scope", "MeetSkool" },
+                { "grant_type", "password" },
+                { "client_secret", "secret" }
+            };
+
+            var content = new FormUrlEncodedContent(values);
+            var responseToken =
+                await client.PostAsync("https://localhost:7046/connect/token",
+                    content);
+            var accessToken = await responseToken.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<AccessTokenModel>(accessToken);
         }
         catch (Exception e)
         {

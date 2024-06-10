@@ -107,7 +107,7 @@ public class AccountServices : IAccountServices
         }
     }
 
-    public async Task<ServiceResponse<List<string>>?> GetUserRoles(string email)
+    public async Task<string?> GetUserRoles(string email)
     {
         try
         {

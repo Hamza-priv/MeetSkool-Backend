@@ -33,6 +33,9 @@ public sealed class ChatServices : Hub<IChatServices>
 
             await Clients.Client(Context.ConnectionId)
                 .UserConnected("Your are connected to our system " + $"{Context.ConnectionId}");
+            /*
+            await Clients.Users(Context.UserIdentifier).UserConnected("Your are connected to our system " + $"{Context.ConnectionId}");
+        */
         }
         catch (Exception e)
         {
@@ -47,6 +50,7 @@ public sealed class ChatServices : Hub<IChatServices>
         {
             await Groups.AddToGroupAsync(ownerId, groupId);
             await Clients.Group(groupId).AddUserToGroup($"{ownerName} " + "has created this group");
+            
 
             var group = new CreateGroupRequestDto()
             {
@@ -115,10 +119,13 @@ public sealed class ChatServices : Hub<IChatServices>
         await _messageServices.SaveGroupMessage(groupMessage);
     }
 
+    
+    //  for now receiverID is basically connectionId also senderId todo 
     public async Task SendMessageToUser(string receiverId, string senderId, string message, string senderName,
         string receiverName)
     {
         await Clients.Client(receiverId).SendMessageToUser(senderId, message);
+        await Clients.User(Context.ConnectionId).SendMessageToUser(senderId, message);
 
         var conversationMessage = new AddConversationMessageRequestDto()
         {
@@ -128,6 +135,7 @@ public sealed class ChatServices : Hub<IChatServices>
             ReceiverName = receiverName,
             Message = message
         };
+        
         await _messageServices.SaveConversationMessage(conversationMessage);
     }
 

@@ -6,9 +6,8 @@ namespace Identity.Application.ViewModels;
 
 public class UserSignInResponse
 {
-    public ServiceResponse<List<string>>? UserRoles { get; set; }
+    public string? UserRoles { get; set; }
     public UserInfo? UserInfo { get; set; }
-    public SignInResult? SignInResult { get; set; }
     public AccessTokenModel? AccessToken { get; set; }
 
     public string? ErrorMessage { get; set; }
@@ -30,4 +29,5 @@ public class UserInfo
     public string? FullName { get; set; }
     public string? Email { get; set; }
     public Guid Id { get; set; }
+    public bool IsTeacher { get; set; }
 }
