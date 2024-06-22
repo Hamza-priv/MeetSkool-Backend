@@ -14,11 +14,11 @@ public class OrderTokenRepository : IOrderTokenRepository
         _notificationDbContext = notificationDbContext;
     }
 
-    public async Task AddToken(string token)
+    public async Task AddToken(string token, string teacherId)
     {
         try
         {
-            _notificationDbContext.OrderTokens.Add(new OrderToken() { Token = token });
+            _notificationDbContext.OrderTokens.Add(new OrderToken() { Token = token, Teacher = teacherId});
             await _notificationDbContext.SaveChangesAsync();
         }
         catch (Exception e)

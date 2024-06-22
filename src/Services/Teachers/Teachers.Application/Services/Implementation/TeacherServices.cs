@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Teachers.Application.DTOS.Request.TeacherDto;
+using Teachers.Application.DTOS.Response.SubjectDto;
 using Teachers.Application.DTOS.Response.TeacherDto;
 using Teachers.Application.ServiceResponse;
 using Teachers.Application.Services.Interfaces;
@@ -141,18 +142,21 @@ public class TeacherServices : ITeacherServices
             var teacher = await _teacherRepository.GetByIdAsync(teacherId);
             if (teacher != null)
             {
-                getTeacherResponse.Data = _mapper.Map<GetAllInfoOfTeacherResponseDto>(teacher);
-                getTeacherResponse.Messages.Add("Teacher found successfully");
+                /*getTeacherResponse.Data = _mapper.Map<GetAllInfoOfTeacherResponseDto>(teacher);
+                getTeacherResponse.Messages.Add("Teacher found successfully");*/
                 var studentEducation = await _educationServices.GetTeacherEducation(teacherId);
                 if (studentEducation.Success)
                 {
-                    getTeacherResponse.Data = _mapper.Map<GetAllInfoOfTeacherResponseDto>(studentEducation);
+                    getTeacherResponse.Data = _mapper.Map<GetAllInfoOfTeacherResponseDto>(studentEducation.Data);
                     getTeacherResponse.Messages.Add("TeacherEducation found successfully");
                     var studentSubjects = await _teacherSubjectServices.GetTeacherSubject(teacherId);
                     if (studentSubjects.Success)
                     {
-                        getTeacherResponse.Data = _mapper.Map<GetAllInfoOfTeacherResponseDto>(studentSubjects);
+                        var subjects = _mapper.Map<List<GetSubjectResponseDto>>(studentSubjects.Data);
+                        getTeacherResponse.Data.Subjects = subjects;
                         getTeacherResponse.Messages.Add("TeacherSubjects found successfully");
+                        getTeacherResponse.Data.TeacherName = teacher.TeacherName;
+                        getTeacherResponse.Data.Description = teacher.Description;
                         return getTeacherResponse;
                     }
 

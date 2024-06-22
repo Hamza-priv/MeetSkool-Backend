@@ -2,6 +2,6 @@
 
 public interface ITokenServices
 {
-    Task<string> GenerateToken();
+    Task<string> GenerateToken(string teacherId);
     Task<bool> GetToken(string token);
 }

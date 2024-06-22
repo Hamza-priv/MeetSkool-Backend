@@ -99,7 +99,9 @@ public class TeachersController : ControllerBase
         }
     }
     
+    /*
     [Authorize(Roles = "Teacher,Student")]
+    */
     [Route("getTeacherInfo")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetAllInfoOfTeacherResponseDto>>> GetTeacherInfo(string teacherId)

@@ -8,7 +8,9 @@ namespace Students.Application.Services.Interfaces;
 public interface IOrderServices
 { 
     Task CreateOrder(AddOrderRequestDto orderRequestDto);
-    Task ConfirmOrder(Guid orderId);
-    Task DeleteOrder(Guid orderId);
+    Task ConfirmOrder(string orderId, DateTime confirmationDate);
+    Task CancelOrder(string orderId, DateTime cancelTime);
+    Task CompleteOrder(string orderId);
+    
     Task<ServiceResponse<List<GetOrdersResponseDto>>> GetOrders(string orderById);
 }

@@ -5,6 +5,7 @@ using Students.Application.ServiceResponse;
 using Students.Application.Services.Interfaces;
 using Students.Core.Entities;
 using Students.Core.IRepository;
+using Students.Infrastructure;
 
 namespace Students.Application.Services.Implementation;
 
@@ -35,24 +36,16 @@ public class OrderServices : IOrderServices
         }
     }
 
-    public async Task ConfirmOrder(Guid orderId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task DeleteOrder(Guid orderId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task UpdateOrder(Guid orderId)
+    public async Task ConfirmOrder(string orderId, DateTime confirmationDate)
     {
         try
         {
-            var orderToDb = await _orderRepository.GetByIdAsync(orderId);
-            if (orderToDb != null)
+            var dbOrder = await _orderRepository.GetByIdAsync(orderId);
+            if (dbOrder is not null)
             {
-                await _orderRepository.UpdateAsync(orderToDb);
+                dbOrder.Status = Status.Confirmed;
+                dbOrder.CreatedDate = confirmationDate;
+                await _orderRepository.UpdateAsync(dbOrder);
             }
         }
         catch (Exception e)
@@ -61,6 +54,38 @@ public class OrderServices : IOrderServices
             throw;
         }
     }
+    public async Task CancelOrder(string orderId, DateTime cancelTime)
+    {
+        try
+        {
+            var dbOrder = await _orderRepository.GetByIdAsync(orderId);
+            if (dbOrder is not null)
+            {
+                dbOrder.Status = Status.Cancelled;
+                dbOrder.CreatedDate = cancelTime;
+                await _orderRepository.UpdateAsync(dbOrder);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task CompleteOrder(string orderId)
+    {
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
 
     public async Task<ServiceResponse<List<GetOrdersResponseDto>>> GetOrders(string orderById)
     {

@@ -1,6 +1,14 @@
-﻿namespace Notification.Infrastructure.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
-public class NotificationDbContextFactory
+namespace Notification.Infrastructure.Data;
+
+public class NotificationDbContextFactory : IDesignTimeDbContextFactory<NotificationDbContext>
 {
-    
+    public NotificationDbContext CreateDbContext(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<NotificationDbContext>();
+        optionsBuilder.UseSqlServer("Server=.;Database=MeetSkoolNotificationDb;TrustServerCertificate=true;Trusted_Connection=True;MultipleActiveResultSets=true");
+        return new NotificationDbContext(optionsBuilder.Options);
+    }
 }

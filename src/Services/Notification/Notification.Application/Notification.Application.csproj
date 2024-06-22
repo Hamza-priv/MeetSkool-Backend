@@ -11,9 +11,11 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0"/>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2-develop.1560" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Contracts\Contracts.csproj" />
       <ProjectReference Include="..\Notification.Infrastructure\Notification.Infrastructure.csproj" />
     </ItemGroup>
 

@@ -9,5 +9,5 @@ public class NotificationDbContext : DbContext
     {
     }
 
-    public DbSet<OrderToken?> OrderTokens { get; set; }
+    public DbSet<OrderToken> OrderTokens { get; set; }
 }

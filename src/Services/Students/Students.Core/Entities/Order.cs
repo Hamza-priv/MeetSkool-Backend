@@ -6,9 +6,9 @@ namespace Students.Core.Entities;
 public class Order
 {
     [Key] [DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public Guid OrderId { get; set; } = Guid.NewGuid();
+    public string? OrderId { get; set; }
     public string? OrderById { get; set; }
     public string? OrderToId { get; set; }
-    public DateTime CreatedDate { get; set; } = DateTime.Now.ToLocalTime();
+    public DateTime CreatedDate { get; set; }
     public string? Status { get; set; }
 }

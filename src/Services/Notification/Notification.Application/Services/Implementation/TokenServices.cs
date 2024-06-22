@@ -15,7 +15,7 @@ public class TokenServices : ITokenServices
         _orderTokenRepository = orderTokenRepository;
     }
 
-    public async Task<string> GenerateToken()
+    public async Task<string> GenerateToken(string teacherId)
     {
         try
         {
@@ -32,7 +32,7 @@ public class TokenServices : ITokenServices
                 result.Append(chars[b % (chars.Length)]);
             }
 
-            await _orderTokenRepository.AddToken(result.ToString());
+            await _orderTokenRepository.AddToken(result.ToString(), teacherId);
             return result.ToString();
         }
         catch (Exception e)
