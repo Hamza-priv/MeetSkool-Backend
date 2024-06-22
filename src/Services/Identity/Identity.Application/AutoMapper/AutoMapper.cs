@@ -20,6 +20,7 @@ public class AutoMapper : Profile
             .ForMember(dest => dest.PhoneNumberConfirmed, opt => opt.MapFrom(src => true))
             .ForMember(dest => dest.UserImage, opt => opt.MapFrom(src => src.UserImage))
             .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now));
+        
         CreateMap<MeetSkoolIdentityUser, UserCreationResponse>();
         CreateMap<MeetSkoolIdentityUser, UserUpdateResponse>();
         CreateMap<UpdateUser, MeetSkoolIdentityUser>();

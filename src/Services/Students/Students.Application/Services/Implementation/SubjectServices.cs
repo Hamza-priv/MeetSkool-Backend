@@ -32,18 +32,15 @@ public class SubjectServices : ISubjectServices
         }
     }
 
-    public async Task<ServiceResponse<GetSubjectListResponseDto>> GetSearchedSubjects(string? searchTerm)
+    public async Task<ServiceResponse<List<GetSubjectListResponseDto>>> GetSearchedSubjects(string? searchTerm)
     {
-        var getSearchedSubjectResponse = new ServiceResponse<GetSubjectListResponseDto>()
-        {
-            Data = new GetSubjectListResponseDto()
-        };
+        var getSearchedSubjectResponse = new ServiceResponse<List<GetSubjectListResponseDto>>();
         try
         {
             var subjectList = await _subjectRepository.SearchSubjects(searchTerm);
             if (subjectList.Count > 0)
             {
-                getSearchedSubjectResponse.Data = _mapper.Map<GetSubjectListResponseDto>(subjectList);
+                getSearchedSubjectResponse.Data = _mapper.Map<List<GetSubjectListResponseDto>>(subjectList);
                 getSearchedSubjectResponse.Messages.Add("Subjects found");
                 return getSearchedSubjectResponse;
             }

@@ -262,7 +262,7 @@ public class StudentController : ControllerBase
 
     [Route("getSearchedSubjects")]
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<GetSubjectListResponseDto>>> GetSearchedSubject(string? searchTerm)
+    public async Task<ActionResult<ServiceResponse<List<GetSubjectListResponseDto>>>> GetSearchedSubject(string? searchTerm)
     {
         try
         {

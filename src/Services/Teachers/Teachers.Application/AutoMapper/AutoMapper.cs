@@ -29,7 +29,7 @@ public class AutoMapper : Profile
         CreateMap<Teacher, UpdateTeacherRequestDto>();
         CreateMap<Teacher, GetAllInfoOfTeacherResponseDto>();
         CreateMap<Education, GetAllInfoOfTeacherResponseDto>();
-        CreateMap<Subject, GetAllInfoOfTeacherResponseDto>();
+        CreateMap<GetTeacherSubjectResponseDto, GetAllInfoOfTeacherResponseDto>();
         CreateMap<Education, AddEducationResponseDto>();
         CreateMap<Education, UpdateEducationResponseDto>();
         CreateMap<Education, UpdateEducationRequestDto>();
