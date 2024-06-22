@@ -20,6 +20,7 @@ public static class ConfigureInfrastructureServices
         serviceCollection.AddScoped<IFriendRepository, FriendRepository>();
         serviceCollection.AddScoped<ISubjectRepository, SubjectRepository>();
         serviceCollection.AddScoped<IStudentSubjectsRepository, StudentSubjectRepository>();
+        serviceCollection.AddScoped<IOrderRepository, OrderRepository>();
         return serviceCollection;
     }
 }

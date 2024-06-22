@@ -15,6 +15,7 @@ public static class ConfigureApplicationServices
         serviceCollection.AddScoped<IFriendServices, FriendServices>();
         serviceCollection.AddScoped<ISubjectServices, SubjectServices>();
         serviceCollection.AddScoped<IStudentSubjectServices, StudentSubjectServices>();
+        serviceCollection.AddScoped<IOrderServices, OrderServices>();
         return serviceCollection;
     }
 }

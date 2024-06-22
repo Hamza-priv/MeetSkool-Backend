@@ -9,7 +9,7 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
 {
     private readonly StudentDbContext _studentDbContext;
 
-    protected OrderRepository(StudentDbContext studentDbContext) : base(studentDbContext)
+    public OrderRepository(StudentDbContext studentDbContext) : base(studentDbContext)
     {
         _studentDbContext = studentDbContext;
     }
