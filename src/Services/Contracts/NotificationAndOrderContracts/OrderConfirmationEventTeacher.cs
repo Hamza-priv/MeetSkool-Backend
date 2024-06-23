@@ -1,8 +1,7 @@
 ﻿namespace Contracts.NotificationAndOrderContracts;
 
-public class OrderCompletionEventStudent
+public class OrderConfirmationEventTeacher
 {
     public required string OrderId { get; set; }
-    public required string StudentId { get; set; }
     public DateTime ConfirmationDate { get; set; } 
 }

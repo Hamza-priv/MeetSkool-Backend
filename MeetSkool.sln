@@ -46,6 +46,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teachers.Api", "src\Services\Teachers\Teachers.Api\Teachers.Api.csproj", "{6FF0E3BD-64E6-41B3-904A-89169F62BD62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{E957A6C9-193C-4287-9AB9-8A81F5001D08}"
+	ProjectSection(SolutionItems) = preProject
+		src\Services\Notification\docker-compose.yml = src\Services\Notification\docker-compose.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{367ADD2C-166F-4A0F-AC94-CD0972E43939}"
 EndProject

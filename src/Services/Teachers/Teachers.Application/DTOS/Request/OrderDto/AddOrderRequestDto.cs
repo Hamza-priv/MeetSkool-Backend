@@ -1,4 +1,4 @@
-﻿namespace Students.Application.DTOS.Request.OrderDto;
+﻿namespace Teachers.Application.DTOS.Request.OrderDto;
 
 public class AddOrderRequestDto
 {
@@ -6,6 +6,5 @@ public class AddOrderRequestDto
     public string? OrderById { get; set; }
     public string? OrderToId { get; set; }
     public string? Status { get; set; }
-
     public DateTime CreatedDate { get; set; }
 }

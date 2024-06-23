@@ -46,5 +46,7 @@ public class AutoMapper : Profile
         CreateMap<Friend, GetStudentFriendResponseDto>();
         CreateMap<Subject, GetSubjectListResponseDto>();
         CreateMap<Student, GetStudentListResponseDto>();
+        CreateMap<GetStudentEducationResponseDto, GetAllInfoOfStudentResponseDto>();
+        CreateMap<GetStudentSubjectResponseDto, GetSubjectResponseDto>();
     }
 }

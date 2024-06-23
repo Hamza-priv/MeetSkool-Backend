@@ -12,9 +12,13 @@ public static class ConfigureApplicationServices
     {
         serviceCollection.AddScoped<IPublish, Publisher>();
         serviceCollection.AddScoped<ITokenServices, TokenServices>();
+        serviceCollection.AddSignalR();
+
         serviceCollection.AddMassTransit(busConfigurator =>
         {
+            /*
             busConfigurator.SetKebabCaseEndpointNameFormatter();
+            */
             busConfigurator.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host("localhost","/", h =>
@@ -22,7 +26,9 @@ public static class ConfigureApplicationServices
                     h.Username("guest");
                     h.Password("guest");
                 });
+                /*
                 cfg.ConfigureEndpoints(context);
+            */
             });
         });
         return serviceCollection;

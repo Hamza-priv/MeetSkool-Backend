@@ -1,24 +1,20 @@
-﻿using AutoMapper;
-using Contracts.NotificationAndOrderContracts;
+﻿using Contracts.NotificationAndOrderContracts;
 using MassTransit;
-using Students.Application.DTOS.Request.OrderDto;
-using Students.Application.Services.Interfaces;
-using Students.Infrastructure;
+using Teachers.Application.DTOS.Request.OrderDto;
+using Teachers.Application.Services.Interfaces;
+using Teachers.Infrastructure;
 
-namespace Students.Application.Consumers;
+namespace Teachers.Application.Consumers;
 
-public class AddOrderConsumers : IConsumer<OrderCreationEventStudent>
+public class AddOrderConsumer : IConsumer<OrderCreationEvenTeacher>
 {
     private readonly IOrderServices _orderServices;
-    private readonly IMapper _mapper;
 
-    public AddOrderConsumers(IOrderServices orderServices, IMapper mapper)
+    public AddOrderConsumer(IOrderServices orderServices)
     {
         _orderServices = orderServices;
-        _mapper = mapper;
     }
-
-    public async Task Consume(ConsumeContext<OrderCreationEventStudent> context)
+    public async Task Consume(ConsumeContext<OrderCreationEvenTeacher> context)
     {
         try
         {
@@ -30,6 +26,7 @@ public class AddOrderConsumers : IConsumer<OrderCreationEventStudent>
                 OrderId = context.Message.OrderId,
                 CreatedDate = context.Message.CreationDate
             };
+            
             await _orderServices.CreateOrder(order);
         }
         catch (Exception e)

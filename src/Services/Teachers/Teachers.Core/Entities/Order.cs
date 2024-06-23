@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Teachers.Core.Entities;
 
-public class Orders
+public class Order
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]

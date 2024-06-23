@@ -1,10 +1,10 @@
 ﻿using Contracts.NotificationAndOrderContracts;
 using MassTransit;
-using Students.Application.Services.Interfaces;
+using Teachers.Application.Services.Interfaces;
 
-namespace Students.Application.Consumers;
+namespace Teachers.Application.Consumers;
 
-public class ConfirmOrderConsumer : IConsumer<OrderConfirmationEventStudent>
+public class ConfirmOrderConsumer : IConsumer<OrderConfirmationEventTeacher>
 {
     private readonly IOrderServices _orderServices;
 
@@ -12,7 +12,8 @@ public class ConfirmOrderConsumer : IConsumer<OrderConfirmationEventStudent>
     {
         _orderServices = orderServices;
     }
-    public async Task Consume(ConsumeContext<OrderConfirmationEventStudent> context)
+
+    public async Task Consume(ConsumeContext<OrderConfirmationEventTeacher> context)
     {
         try
         {

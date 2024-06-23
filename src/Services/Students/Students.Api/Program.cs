@@ -27,10 +27,12 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    
 }).AddJwtBearer("Bearer", options =>
 {
     options.Authority = builder.Configuration.GetValue<string>("IdentityUrl");

@@ -35,10 +35,12 @@ public class OrderNotificationServices : Hub<IOrderNotificationServices>
             var orderId = Guid.NewGuid().ToString();
             if (!string.IsNullOrEmpty(token))
             {
-                await Clients.Client(teacherId).CreateOrderToken(token, studentId, orderId);
+                await Clients.Client(Context.ConnectionId).CreateOrderToken(token, studentId, orderId);
                 
                 _ = _publish.PublishOrderToStudent(studentId, orderId,teacherId);
+                /*
                 _ = _publish.PublishOrderToTeacher(teacherId, orderId, studentId);
+                */
                 
             }
         }
@@ -57,7 +59,7 @@ public class OrderNotificationServices : Hub<IOrderNotificationServices>
             if (isToken)
             {
                 await Clients.Client(studentId).ConfirmOrder("Your Order To " + $"{teacherName} is confirmed");
-                _ = _publish.PublishOrderConfirmation(orderId);
+                _ = _publish.PublishOrderConfirmationStudent(orderId);
             }
             
         }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Students.Application.DTOS.Request.StudentDto;
 using Students.Application.DTOS.Response.StudentDto;
+using Students.Application.DTOS.Response.SubjectDto;
 using Students.Application.ServiceResponse;
 using Students.Application.Services.Interfaces;
 using Students.Core.Entities;
@@ -152,7 +153,8 @@ public class StudentServices : IStudentServices
                     var studentSubjects = await _studentSubjectServices.GetStudentSubject(studentId);
                     if (studentSubjects.Success)
                     {
-                        getStudentResponse.Data = _mapper.Map<GetAllInfoOfStudentResponseDto>(studentSubjects);
+                        var subjects = _mapper.Map<List<GetSubjectResponseDto>>(studentSubjects.Data);
+                        getStudentResponse.Data.Subjects = subjects;
                         getStudentResponse.Messages.Add("StudentSubjects found successfully");
                         return getStudentResponse;
                     }

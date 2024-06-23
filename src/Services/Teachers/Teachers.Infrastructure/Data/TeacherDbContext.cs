@@ -14,6 +14,7 @@ public class TeacherDbContext : DbContext
     public DbSet<Subject> Subjects { get; set; }
     public DbSet<TeacherSubject> TeacherSubjects { get; set; }
     public DbSet<Comments> Comments { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

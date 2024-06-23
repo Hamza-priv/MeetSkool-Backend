@@ -3,5 +3,5 @@
 public class OrderCancellationEventStudent
 {
     public string? OrderId { get; set; }
-    public DateTime CancelTime { get; set; } = DateTime.Now.ToLocalTime();
+    public DateTime CancelTime { get; set; }
 }

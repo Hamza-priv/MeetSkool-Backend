@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Students.Application.Services.Implementation;
 using Students.Application.Services.Interfaces;
@@ -16,6 +17,30 @@ public static class ConfigureApplicationServices
         serviceCollection.AddScoped<ISubjectServices, SubjectServices>();
         serviceCollection.AddScoped<IStudentSubjectServices, StudentSubjectServices>();
         serviceCollection.AddScoped<IOrderServices, OrderServices>();
+
+        var assembly = Assembly.GetExecutingAssembly();
+        serviceCollection.AddMassTransit(conf =>
+        {
+            conf.SetKebabCaseEndpointNameFormatter();
+            conf.SetInMemorySagaRepositoryProvider();
+            conf.AddConsumers(assembly);
+            conf.AddSagaStateMachines(assembly);
+            conf.AddSagas(assembly);
+            conf.AddActivities(assembly);
+            
+            serviceCollection.AddMassTransit(busConfigurator =>
+            {
+                busConfigurator.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("localhost","/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+        });
         return serviceCollection;
     }
 }
