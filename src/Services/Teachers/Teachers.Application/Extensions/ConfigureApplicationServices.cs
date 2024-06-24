@@ -16,6 +16,7 @@ public static class ConfigureApplicationServices
         serviceCollection.AddScoped<ISubjectServices, SubjectServices>();
         serviceCollection.AddScoped<ITeacherSubjectServices, TeacherSubjectServices>();
         serviceCollection.AddScoped<ICommentServices, CommentServices>();
+        serviceCollection.AddScoped<IOrderServices, OrderServices>();
 
         var assembly = Assembly.GetExecutingAssembly();
         serviceCollection.AddMassTransit(conf =>

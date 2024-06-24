@@ -21,6 +21,7 @@ public static class ConfigureInfrastructureServices
         serviceCollection.AddScoped<ISubjectRepository, SubjectRepository>();
         serviceCollection.AddScoped<ITeacherSubjectRepository, TeacherSubjectRepository>();
         serviceCollection.AddScoped<ICommentRepository, CommentRepository>();
+        serviceCollection.AddScoped<IOrderRepository, OrderRepository>();
         return serviceCollection;
     }
 }

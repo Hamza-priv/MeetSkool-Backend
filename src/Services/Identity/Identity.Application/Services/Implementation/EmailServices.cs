@@ -108,7 +108,7 @@ public class EmailServices : IEmailServices
     {
         try
         {
-            var path = Path.Combine(@"EmailTemplates\SendEmailConfirmedNotification.html");
+            var path = Path.Combine(@"EmailTemplates\OrderReceived.html");
             _ = await SendEmail("", path, email, "Your Order is Sent", userName);
         }
         catch (Exception e)
@@ -122,7 +122,7 @@ public class EmailServices : IEmailServices
     {
         try
         {
-            var path = Path.Combine(@"EmailTemplates\SendEmailConfirmedNotification.html");
+            var path = Path.Combine(@"EmailTemplates\OrderConfirmation.html");
             _ = await SendEmail("", path, email, "Your Order is Confirmed", userName);
         }
         catch (Exception e)
