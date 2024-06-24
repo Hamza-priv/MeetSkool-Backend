@@ -102,7 +102,65 @@ public class EmailServices : IEmailServices
         }
     }
 
-    private async Task<bool> SendEmail(string callBackUrl, string path, string recipientEmail, string subject,
+    //change path
+
+    public async Task OrderSentEmail(string userId, string userName, string email)
+    {
+        try
+        {
+            var path = Path.Combine(@"EmailTemplates\SendEmailConfirmedNotification.html");
+            _ = await SendEmail("", path, email, "Your Order is Sent", userName);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task OrderConfirmedEmail(string userId, string userName, string email)
+    {
+        try
+        {
+            var path = Path.Combine(@"EmailTemplates\SendEmailConfirmedNotification.html");
+            _ = await SendEmail("", path, email, "Your Order is Confirmed", userName);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task OrderCancelEmail(string userId, string userName, string email)
+    {
+        try
+        {
+            var path = Path.Combine(@"EmailTemplates\SendEmailConfirmedNotification.html");
+            _ = await SendEmail("", path, email, "Your Order is Canceled", userName);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task OrderCompleteEmail(string userId, string userName, string email)
+    {
+        try
+        {
+            var path = Path.Combine(@"EmailTemplates\SendEmailConfirmedNotification.html");
+            _ = await SendEmail("", path, email, "Your Order is Complete", userName);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    private async Task<bool> SendEmail(string? callBackUrl, string path, string recipientEmail, string subject,
         string? userName)
     {
         var template = string.Empty;

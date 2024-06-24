@@ -13,11 +13,13 @@ public class OrderServices : IOrderServices
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IMapper _mapper;
+    private readonly IStudentRepository _studentRepository;
 
-    public OrderServices(IOrderRepository orderRepository, IMapper mapper)
+    public OrderServices(IOrderRepository orderRepository, IMapper mapper, IStudentRepository studentRepository)
     {
         _orderRepository = orderRepository;
         _mapper = mapper;
+        _studentRepository = studentRepository;
     }
     
     // will be called in consumers
@@ -73,10 +75,24 @@ public class OrderServices : IOrderServices
         }
     }
 
-    public async Task CompleteOrder(string orderId)
+    public async Task CompleteOrder(string orderId, string studentId, DateTime completeTime)
     {
         try
         {
+            var dbOrder = await _orderRepository.GetByIdAsync(orderId);
+            if (dbOrder is not null)
+            {
+                dbOrder.Status = Status.Completed;
+                dbOrder.CreatedDate = completeTime;
+                await _orderRepository.UpdateAsync(dbOrder);
+            }
+
+            var student = await _studentRepository.GetByIdAsync(studentId);
+            if (student is not null)
+            {
+                 // var totalOrders = (in) student.TotalOrder 
+                 // plus total orders
+            }
 
         }
         catch (Exception e)

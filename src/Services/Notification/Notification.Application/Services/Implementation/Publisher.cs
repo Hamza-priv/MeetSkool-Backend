@@ -1,4 +1,5 @@
 ﻿using Contracts.NotificationAndOrderContracts;
+using Contracts.OrderAndEmailContracts;
 using MassTransit;
 using Notification.Application.Services.Interfaces;
 
@@ -12,6 +13,7 @@ public class Publisher : IPublish
     {
         _publisher = publisher;
     }
+
     public async Task PublishOrderToStudent(string studentId, string orderId, string teacherId)
     {
         try
@@ -22,9 +24,8 @@ public class Publisher : IPublish
                 StudentId = studentId,
                 TeacherId = teacherId,
                 CreationDate = DateTime.Now.ToLocalTime()
-                
             };
-            
+
             await _publisher.Publish(order);
         }
         catch (Exception e)
@@ -45,7 +46,7 @@ public class Publisher : IPublish
                 StudentId = studentId,
                 CreationDate = DateTime.Now.ToLocalTime()
             };
-            
+
             await _publisher.Publish(order);
         }
         catch (Exception e)
@@ -90,7 +91,8 @@ public class Publisher : IPublish
         {
             Console.WriteLine(e);
             throw;
-        }    }
+        }
+    }
 
     public async Task PublishOrderCancellationToStudent(string orderId)
     {
@@ -101,7 +103,7 @@ public class Publisher : IPublish
                 OrderId = orderId,
                 CancelTime = DateTime.Now.ToLocalTime()
             };
-            await  _publisher.Publish(order);
+            await _publisher.Publish(order);
         }
         catch (Exception e)
         {
@@ -119,22 +121,125 @@ public class Publisher : IPublish
                 OrderId = orderId,
                 CancelTime = DateTime.Now.ToLocalTime()
             };
-            await  _publisher.Publish(order);
+            await _publisher.Publish(order);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
-        }    }
-
-
-    public async Task PublishOrderCompleteToTeacher(string teacherId, string orderId)
-    {
-        throw new NotImplementedException();
+        }
     }
 
-    public async Task PublishOrderCompleteToStudent(string studentId, string orderId)
+
+    public async Task PublishOrderCompleteToTeacher(string orderId, string teacherId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var order = new OrderCompletionEventTeacher()
+            {
+                OrderId = orderId,
+                CompletionDate = DateTime.Now.ToLocalTime(),
+                TeacherId = teacherId
+            };
+
+            await _publisher.Publish(order);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task PublishOrderCompleteToStudent(string orderId, string studentId)
+    {
+        try
+        {
+            var order = new OrderCompletionEventStudent()
+            {
+                OrderId = orderId,
+                CompletionDate = DateTime.Now.ToLocalTime(),
+                StudentId = studentId
+            };
+
+            await _publisher.Publish(order);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task PublishOrderSentEmail(string teacherId, string studentId)
+    {
+        try
+        {
+            var info = new OrderSentEmailEvent()
+            {
+                TeacherId = teacherId,
+                StudentId = studentId
+            };
+            await _publisher.Publish(info);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task PublishOrderConfirmEmail(string teacherId, string studentId)
+    {
+        try
+        {
+            var info = new OrderConfirmEmailEvent()
+            {
+                TeacherId = teacherId,
+                StudentId = studentId
+            };
+            await _publisher.Publish(info);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task PublishOrderCancelEmail(string teacherId, string studentId)
+    {
+        try
+        {
+            var info = new OrderCancelEmailEvent()
+            {
+                TeacherId = teacherId,
+                StudentId = studentId
+            };
+            await _publisher.Publish(info);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task PublishOrderCompleteEmail(string teacherId, string studentId)
+    {
+        try
+        {
+            var info = new OrderCompleteEmailEvent()
+            {
+                TeacherId = teacherId,
+                StudentId = studentId
+            };
+            await _publisher.Publish(info);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

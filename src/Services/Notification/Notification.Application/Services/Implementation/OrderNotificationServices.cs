@@ -38,10 +38,9 @@ public class OrderNotificationServices : Hub<IOrderNotificationServices>
                 await Clients.Client(Context.ConnectionId).CreateOrderToken(token, studentId, orderId);
                 
                 _ = _publish.PublishOrderToStudent(studentId, orderId,teacherId);
-                /*
                 _ = _publish.PublishOrderToTeacher(teacherId, orderId, studentId);
-                */
-                
+                _ = _publish.PublishOrderSentEmail(teacherId, studentId);
+
             }
         }
         catch (Exception e)
@@ -51,7 +50,7 @@ public class OrderNotificationServices : Hub<IOrderNotificationServices>
         }
     }
 
-    public async Task ConfirmOrder(string token, string studentId, string teacherName, string orderId)
+    public async Task ConfirmOrder(string token, string studentId, string teacherName, string orderId, string teacherId)
     {
         try
         {
@@ -60,6 +59,7 @@ public class OrderNotificationServices : Hub<IOrderNotificationServices>
             {
                 await Clients.Client(studentId).ConfirmOrder("Your Order To " + $"{teacherName} is confirmed");
                 _ = _publish.PublishOrderConfirmationStudent(orderId);
+                _ = _publish.PublishOrderConfirmEmail(teacherId, studentId);
             }
             
         }
@@ -70,12 +70,13 @@ public class OrderNotificationServices : Hub<IOrderNotificationServices>
         }
     }
 
-    public async Task CancelOrder(string orderId, string studentId, string teacherName)
+    public async Task CancelOrder(string orderId, string studentId, string teacherName, string teacherId)
     {
         try
         {
             await Clients.Client(studentId).CancelOrder($"Your order to {teacherName} is canceled");
             _ = _publish.PublishOrderCancellationToStudent(orderId);
+            _ = _publish.PublishOrderCancelEmail(teacherId, studentId);
         }
         catch (Exception e)
         {

@@ -18,7 +18,7 @@ public class OrderTokenRepository : IOrderTokenRepository
     {
         try
         {
-            _notificationDbContext.OrderTokens.Add(new OrderToken() { Token = token, Teacher = teacherId});
+            _notificationDbContext.OrderTokens.Add(new OrderToken() { Token = token, Teacher = teacherId });
             await _notificationDbContext.SaveChangesAsync();
         }
         catch (Exception e)
@@ -32,7 +32,59 @@ public class OrderTokenRepository : IOrderTokenRepository
     {
         try
         {
-            return await _notificationDbContext.OrderTokens.FirstOrDefaultAsync(x => x != null && x.Token == token);
+            var dbToken = await _notificationDbContext.OrderTokens.FirstOrDefaultAsync(x => x.Token == token);
+            if (dbToken == null) return dbToken;
+            dbToken.Confirmed = true;
+            await _notificationDbContext.SaveChangesAsync();
+            return dbToken;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<List<string?>> Get24HourOldToken()
+    {
+        try
+        {
+            return await _notificationDbContext.OrderTokens
+                .Where(x => x.CreatedDate >= DateTime.UtcNow.AddHours(-24))
+                .Select(x => x.Teacher)
+                .ToListAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<List<string?>> Get48HourOldToken()
+    {
+        try
+        {
+            return await _notificationDbContext.OrderTokens
+                .Where(x => x.CreatedDate >= DateTime.UtcNow.AddHours(-48))
+                .Select(x => x.Teacher)
+                .ToListAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<List<string?>> Get72HourOldToken()
+    {
+        try
+        {
+            return await _notificationDbContext.OrderTokens
+                .Where(x => x.CreatedDate >= DateTime.UtcNow.AddHours(-72))
+                .Select(x => x.Teacher)
+                .ToListAsync();
         }
         catch (Exception e)
         {

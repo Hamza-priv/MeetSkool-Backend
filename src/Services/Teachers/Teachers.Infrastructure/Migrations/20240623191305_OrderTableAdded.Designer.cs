@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teachers.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Teachers.Infrastructure.Data;
 namespace Teachers.Infrastructure.Migrations
 {
     [DbContext(typeof(TeacherDbContext))]
-    partial class TeacherDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623191305_OrderTableAdded")]
+    partial class OrderTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

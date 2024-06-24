@@ -3,6 +3,7 @@
 public class OrderCompletionEventTeacher
 {
     public required string OrderId { get; set; }
+    public DateTime CompletionDate { get; set; }
+
     public required string TeacherId { get; set; }
-    public DateTime ConfirmationDate { get; set; }
 }

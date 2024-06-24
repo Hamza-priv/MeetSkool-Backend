@@ -7,4 +7,11 @@ public interface IEmailServices
     Task<bool> SendForgetPassword(Guid userId, string token, string userName, string email);
     Task<bool> PasswordChangedNotification(string userId, string code, string password, string userName, string email);
     Task<bool> EmailConfirmedNotification(string userId, string userName, string email);
+    
+    // order emails
+    Task OrderSentEmail(string userId, string userName, string email);
+    Task OrderConfirmedEmail(string userId, string userName, string email);
+    Task OrderCancelEmail(string userId, string userName, string email);
+    Task OrderCompleteEmail(string userId, string userName, string email);
+
 }
