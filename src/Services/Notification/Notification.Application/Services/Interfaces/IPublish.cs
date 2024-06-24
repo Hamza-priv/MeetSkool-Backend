@@ -28,4 +28,8 @@ public interface IPublish
     public Task PublishOrderConfirmEmail(string teacherId, string studentId);
     public Task PublishOrderCancelEmail(string teacherId, string studentId);
     public Task PublishOrderCompleteEmail(string teacherId, string studentId);
+
+    public Task Reminder1();
+    public Task Reminder2();
+    public Task Reminder3();
 }

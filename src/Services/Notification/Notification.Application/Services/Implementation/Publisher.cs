@@ -1,17 +1,21 @@
 ﻿using Contracts.NotificationAndOrderContracts;
 using Contracts.OrderAndEmailContracts;
+using Contracts.ReminderAndEmailContracts;
 using MassTransit;
 using Notification.Application.Services.Interfaces;
+using Notification.Core.IRepository;
 
 namespace Notification.Application.Services.Implementation;
 
 public class Publisher : IPublish
 {
     private readonly IPublishEndpoint _publisher;
+    private readonly IOrderTokenRepository _orderTokenRepository;
 
-    public Publisher(IPublishEndpoint publisher)
+    public Publisher(IPublishEndpoint publisher, IOrderTokenRepository orderTokenRepository)
     {
         _publisher = publisher;
+        _orderTokenRepository = orderTokenRepository;
     }
 
     public async Task PublishOrderToStudent(string studentId, string orderId, string teacherId)
@@ -241,5 +245,75 @@ public class Publisher : IPublish
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    public async Task Reminder1()
+    {
+        try
+        {
+            var teachers = await _orderTokenRepository.Get24HourOldToken();
+            if (teachers.Count > 0)
+            {
+                foreach (var teacher in teachers.OfType<string>())
+                {
+                    await _publisher.Publish(new Reminder1Event()
+                    {
+                        TeacherId = teacher
+                    });
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task Reminder2()
+    {
+        try
+        {
+            var teachers = await _orderTokenRepository.Get48HourOldToken();
+            if (teachers.Count > 0)
+            {
+                foreach (var teacher in teachers.OfType<string>())
+                {
+                    await _publisher.Publish(new Reminder2Event()
+                    {
+                        TeacherId = teacher
+                    });
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task Reminder3()
+    {
+        try
+        {
+            var teachers = await _orderTokenRepository.Get72HourOldToken();
+            if (teachers.Count > 0)
+            {
+                foreach (var teacher in teachers.OfType<string>())
+                {
+                    await _publisher.Publish(new Reminder3Event()
+                    {
+                        TeacherId = teacher
+                    });
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
 }

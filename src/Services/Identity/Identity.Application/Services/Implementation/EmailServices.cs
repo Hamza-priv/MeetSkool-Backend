@@ -169,6 +169,7 @@ public class EmailServices : IEmailServices
             template = await System.IO.File.ReadAllTextAsync(path);
             template = template.Replace("{$href}", callBackUrl);
             template = template.Replace("{$firstname}", userName);
+            template = template.Replace("${date}", DateTime.Now.ToLocalTime().ToString());
         }
 
         var check = await InternalSendEmail(recipientEmail, subject, template);

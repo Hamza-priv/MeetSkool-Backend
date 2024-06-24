@@ -35,6 +35,7 @@ public class OrderTokenRepository : IOrderTokenRepository
             var dbToken = await _notificationDbContext.OrderTokens.FirstOrDefaultAsync(x => x.Token == token);
             if (dbToken == null) return dbToken;
             dbToken.Confirmed = true;
+            _notificationDbContext.OrderTokens.Update(dbToken);
             await _notificationDbContext.SaveChangesAsync();
             return dbToken;
         }
@@ -50,7 +51,7 @@ public class OrderTokenRepository : IOrderTokenRepository
         try
         {
             return await _notificationDbContext.OrderTokens
-                .Where(x => x.CreatedDate >= DateTime.UtcNow.AddHours(-24))
+                .Where(x => x.CreatedDate >= DateTime.Now.AddHours(-24).ToLocalTime() && x.Confirmed == false)
                 .Select(x => x.Teacher)
                 .ToListAsync();
         }
@@ -66,7 +67,7 @@ public class OrderTokenRepository : IOrderTokenRepository
         try
         {
             return await _notificationDbContext.OrderTokens
-                .Where(x => x.CreatedDate >= DateTime.UtcNow.AddHours(-48))
+                .Where(x => x.CreatedDate >= DateTime.Now.AddHours(-48).ToLocalTime() && x.Confirmed == false)
                 .Select(x => x.Teacher)
                 .ToListAsync();
         }
@@ -82,7 +83,7 @@ public class OrderTokenRepository : IOrderTokenRepository
         try
         {
             return await _notificationDbContext.OrderTokens
-                .Where(x => x.CreatedDate >= DateTime.UtcNow.AddHours(-72))
+                .Where(x => x.CreatedDate >= DateTime.Now.AddHours(-72).ToLocalTime() && x.Confirmed == false)
                 .Select(x => x.Teacher)
                 .ToListAsync();
         }
