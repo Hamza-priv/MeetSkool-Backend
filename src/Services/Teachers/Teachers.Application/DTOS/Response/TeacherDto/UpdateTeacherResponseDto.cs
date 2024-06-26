@@ -3,5 +3,5 @@
 public class UpdateTeacherResponseDto
 {
     public string? Descriptions { get; set; }
-    public string? TotalOrder { get; set; }
+    public string? TeacherName { get; set; }
 }

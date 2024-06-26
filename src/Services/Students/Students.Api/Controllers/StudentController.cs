@@ -62,7 +62,9 @@ public class StudentController : ControllerBase
         }
     }
 
+    /*
     [Authorize(Roles = "Student")]
+    */
     [Route("updateStudent")]
     [HttpPatch]
     public async Task<ActionResult<ServiceResponse<UpdateStudentResponseDto>>> UpdateStudent(
@@ -106,7 +108,9 @@ public class StudentController : ControllerBase
         }
     }
 
+    /*
     [Authorize(Roles = "Student,Teacher")]
+    */
     [Route("getStudentInfo")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetAllInfoOfStudentResponseDto>>> GetStudentInfo(string studentId)
@@ -127,15 +131,16 @@ public class StudentController : ControllerBase
         }
     }
 
+    /*
     [Authorize(Roles = "Student,Admin")]
+    */
     [Route("getAllStudents")]
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<List<GetStudentListResponseDto>>>> GetStudentList(string? searchTerm,
-        int page, int pageSize)
+    public async Task<ActionResult<ServiceResponse<List<GetStudentListResponseDto>>>> GetStudentList(string? searchTerm)
     {
         try
         {
-            var result = await _studentServices.GetAllStudents(searchTerm, page, pageSize);
+            var result = await _studentServices.GetAllStudents(searchTerm);
             if (result.Success)
             {
                 return Ok(result);

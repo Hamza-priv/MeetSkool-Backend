@@ -17,6 +17,7 @@ var configuration = builder.Configuration;
 builder.Services.AddProjectServices(configuration);
 
 var app = builder.Build();
+
 app.MigrateDatabase<ChatDbContext>((context, services) =>
 {
     var logger = services.GetService<ILogger<ChatDbContextSeed>>();

@@ -143,18 +143,24 @@ public class StudentServices : IStudentServices
             var student = await _studentRepository.GetByIdAsync(studentId);
             if (student != null)
             {
+                /*
                 getStudentResponse.Data = _mapper.Map<GetAllInfoOfStudentResponseDto>(student);
+                */
                 getStudentResponse.Messages.Add("Student found successfully");
                 var studentEducation = await _educationServices.GetStudentEducation(studentId);
                 if (studentEducation.Success)
                 {
-                    getStudentResponse.Data = _mapper.Map<GetAllInfoOfStudentResponseDto>(studentEducation);
+                    getStudentResponse.Data = _mapper.Map<GetAllInfoOfStudentResponseDto>(studentEducation.Data);
                     getStudentResponse.Messages.Add("StudentEducation found successfully");
                     var studentSubjects = await _studentSubjectServices.GetStudentSubject(studentId);
                     if (studentSubjects.Success)
                     {
                         var subjects = _mapper.Map<List<GetSubjectResponseDto>>(studentSubjects.Data);
                         getStudentResponse.Data.Subjects = subjects;
+                        getStudentResponse.Data.StudentName = student.StudentName;
+                        getStudentResponse.Data.Descriptions = student.Descriptions;
+                        getStudentResponse.Data.TotalOrder = student.TotalOrder;
+                        getStudentResponse.Data.StudentId = student.StudentId;
                         getStudentResponse.Messages.Add("StudentSubjects found successfully");
                         return getStudentResponse;
                     }
@@ -181,8 +187,7 @@ public class StudentServices : IStudentServices
         }
     }
 
-    public async Task<ServiceResponse<List<GetStudentListResponseDto>>> GetAllStudents(string? searchTerm, int page,
-        int pageSize)
+    public async Task<ServiceResponse<List<GetStudentListResponseDto>>> GetAllStudents(string? searchTerm)
     {
         var getStudentListResponse = new ServiceResponse<List<GetStudentListResponseDto>>();
         try

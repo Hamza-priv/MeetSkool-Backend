@@ -12,4 +12,5 @@ public class GetAllInfoOfStudentResponseDto
     public int? Semester { get; set; }
     public List<GetSubjectResponseDto>? Subjects { get; set; }
     public string? StudentName { get; set; }
+    public string? StudentId { get; set; }
 }
