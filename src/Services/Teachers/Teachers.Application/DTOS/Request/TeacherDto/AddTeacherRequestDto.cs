@@ -4,6 +4,6 @@ public class AddTeacherRequestDto
 {
     public required string TeacherId { get; set; }
     public string? TeacherName { get; set; }
-    public string? Descriptions { get; set; }
-    public string? TotalOrder { get; set; }
+    public string? Description { get; set; }
+    public string? TotalOrderCompleted { get; set; }
 }

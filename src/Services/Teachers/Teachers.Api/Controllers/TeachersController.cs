@@ -121,7 +121,9 @@ public class TeachersController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+    /*
     [Authorize(Roles = "Admin,Student")]
+    */
     [Route("getAllTeachers")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<List<GetTeacherListResponseDto>>>> GetTeacherList(string? searchTerm,

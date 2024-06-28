@@ -154,9 +154,12 @@ public class TeacherServices : ITeacherServices
                     {
                         var subjects = _mapper.Map<List<GetSubjectResponseDto>>(studentSubjects.Data);
                         getTeacherResponse.Data.Subjects = subjects;
-                        getTeacherResponse.Messages.Add("TeacherSubjects found successfully");
                         getTeacherResponse.Data.TeacherName = teacher.TeacherName;
                         getTeacherResponse.Data.Description = teacher.Description;
+                        getTeacherResponse.Data.TotalOrderCompleted = teacher.TotalOrderCompleted;
+                        getTeacherResponse.Data.TeacherId = teacher.TeacherId;
+                        getTeacherResponse.Messages.Add("TeacherSubjects found successfully");
+
                         return getTeacherResponse;
                     }
 

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using Notification.Application.Services.Interfaces;
 
 namespace Notification.Application.Services.Implementation;
 
+[Authorize]
 public class OrderNotificationServices : Hub<IOrderNotificationServices>
 {
     private readonly ITokenServices _tokenServices;
@@ -17,8 +19,8 @@ public class OrderNotificationServices : Hub<IOrderNotificationServices>
     {
         try
         {
-            await Clients.Client(Context.ConnectionId)
-                .UserConnected("Your are connected to our system " + $"{Context.ConnectionId}");
+            await Clients.Client(Context.UserIdentifier)
+                .UserConnected("Your are connected to our system " + $"{Context.UserIdentifier}");
         }
         catch (Exception e)
         {
@@ -35,7 +37,7 @@ public class OrderNotificationServices : Hub<IOrderNotificationServices>
             var orderId = Guid.NewGuid().ToString();
             if (!string.IsNullOrEmpty(token))
             {
-                await Clients.Client(Context.ConnectionId).CreateOrderToken(token, studentId, orderId);
+                await Clients.Client(teacherId).CreateOrderToken(token, studentId, orderId);
                 
                 _ = _publish.PublishOrderToStudent(studentId, orderId,teacherId);
                 _ = _publish.PublishOrderToTeacher(teacherId, orderId, studentId);

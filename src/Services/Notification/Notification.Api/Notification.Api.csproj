@@ -9,11 +9,14 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8"/>
+        <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Notification.Application\Notification.Application.csproj" />
-      <ProjectReference Include="..\Notification.Infrastructure\Notification.Infrastructure.csproj" />
+        <ProjectReference Include="..\Notification.Application\Notification.Application.csproj"/>
+        <ProjectReference Include="..\Notification.Infrastructure\Notification.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

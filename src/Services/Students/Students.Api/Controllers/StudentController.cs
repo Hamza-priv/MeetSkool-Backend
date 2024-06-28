@@ -244,7 +244,9 @@ public class StudentController : ControllerBase
         }
     }
 
+    /*
     [Authorize(Roles = "Student")]
+    */
     [Route("getStudentSubject")]
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<GetStudentSubjectResponseDto>>> GetStudentSubject(string studentId)
@@ -353,7 +355,9 @@ public class StudentController : ControllerBase
 
     // Order Controller
 
+    /*
     [Authorize(Roles = "Student")]
+    */
     [Route("getStudentOrders")]
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<GetOrdersResponseDto>>> GetOrders(string orderById)

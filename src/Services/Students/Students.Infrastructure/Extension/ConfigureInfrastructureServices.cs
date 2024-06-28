@@ -13,7 +13,8 @@ public static class ConfigureInfrastructureServices
         IConfiguration configuration)
     {
         serviceCollection.AddDbContext<StudentDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("ApplicationConnectionString")));
+            options.UseSqlServer(configuration.GetConnectionString("ApplicationConnectionString"))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
         serviceCollection.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         serviceCollection.AddScoped<IStudentRepository, StudentRepository>();
         serviceCollection.AddScoped<IEducationRepository, EducationRepository>();
