@@ -68,10 +68,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapHub<OrderNotificationServices>("notifications");
 
+app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapControllers();
-
 app.UseCors("AllowAnyOrigin");
-
+app.MapControllers();
 app.Run();

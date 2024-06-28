@@ -4,7 +4,9 @@ using Notification.Application.Services.Interfaces;
 
 namespace Notification.Application.Services.Implementation;
 
-[Authorize]
+/*
+[Authorize(Roles = "Teacher,Student")]
+*/
 public class OrderNotificationServices : Hub<IOrderNotificationServices>
 {
     private readonly ITokenServices _tokenServices;
